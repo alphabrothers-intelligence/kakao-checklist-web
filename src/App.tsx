@@ -19,7 +19,7 @@ export default function App() {
   return <main id="app">
     {route.screen === 'intro' && <Intro onStart={() => navigate({ screen: 'question', step: 0 })} />}
     {route.screen === 'question' && <Question key={route.step} step={route.step} selected={answers[route.step]} onSelect={value => select(route.step, value)} onBack={() => navigate(route.step === 0 ? { screen: 'intro' } : { screen: 'question', step: route.step - 1 })} onNext={() => { if (answers[route.step] !== null) navigate(route.step === 3 ? { screen: 'result' } : { screen: 'question', step: route.step + 1 }); }} />}
-    {route.screen === 'result' && isComplete(answers) && <Result ref={resultRef} answers={answers} result={getDiagnosis(answers)} onEdit={() => navigate({ screen: 'question', step: 0 })} onRestart={restart} onSave={() => setDialog('save')} onGuide={() => setDialog('guide')} />}
+    {route.screen === 'result' && isComplete(answers) && <Result ref={resultRef} answers={answers} result={getDiagnosis(answers)} onRestart={restart} onSave={() => setDialog('save')} onGuide={() => setDialog('guide')} />}
     {dialog === 'save' && <SaveDialog resultRef={resultRef} onClose={() => setDialog(null)} />}
     {dialog === 'guide' && <GuideDialog onClose={() => setDialog(null)} />}
   </main>;

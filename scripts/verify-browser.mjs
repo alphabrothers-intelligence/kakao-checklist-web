@@ -27,6 +27,18 @@ await page.getByRole('button',{name:'다음',exact:true}).click();
 await page.getByRole('radio',{name:'브랜드 인지도 높이기'}).check();
 await page.getByRole('button',{name:'결과 보기',exact:true}).click();
 await page.locator('.result').waitFor();await page.evaluate(()=>document.fonts.ready);
+assert.equal(await page.getByRole('button',{name:'답변 수정',exact:true}).count(),0);
+assert.equal(await page.locator('.chip').count(),4);
+async function checkResultHierarchy(target){
+ const layout=await target.evaluate(()=>({
+  sections:[...document.querySelectorAll('.sectionno')].map(n=>({size:getComputedStyle(n).fontSize,numberSize:getComputedStyle(n.querySelector('.section-index')).fontSize,weight:getComputedStyle(n).fontWeight})),
+  problems:[...document.querySelectorAll('.advice-heading')].map(n=>({label:n.querySelector('.advice-caption').textContent,size:parseFloat(getComputedStyle(n.querySelector('.advice-caption')).fontSize),weight:getComputedStyle(n.querySelector('.advice-caption')).fontWeight,bottom:n.querySelector('.advice-caption').getBoundingClientRect().bottom,titleTop:n.querySelector('h3').getBoundingClientRect().top}))
+ }));
+ assert.ok(layout.sections.length===3 && layout.sections.every(n=>n.size===n.numberSize && Number(n.weight)>=700));
+ assert.ok(layout.problems.length>0 && layout.problems.every(n=>n.label==='발견된 항목' && n.size>=17 && Number(n.weight)>=700 && n.titleTop>=n.bottom));
+}
+await checkResultHierarchy(page);
+
 await page.screenshot({path:`${dir}/desktop-result.png`,animations:'disabled',fullPage:true});
 const buttons=await page.locator('.actions button').evaluateAll(nodes=>nodes.map(n=>({width:n.getBoundingClientRect().width,top:n.getBoundingClientRect().top})));
 assert.ok(buttons.every(b=>Math.abs(b.width-buttons[0].width)<1&&b.top===buttons[0].top));
@@ -64,6 +76,8 @@ for(const [step,name] of [[0,'부동산/생활 서비스'],[1,'상담 후 구매
 }
 await mobile.locator('.result').waitFor();
 assert.equal(await mobile.locator('.advice-context').count(),2);
+await checkResultHierarchy(mobile);
+assert.equal(await mobile.getByRole('button',{name:'답변 수정',exact:true}).count(),0);
 assert.ok(await mobile.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
 await mobile.screenshot({path:`${dir}/mobile-result.png`,animations:'disabled',fullPage:true});
 await mobile.getByRole('button',{name:'결과 저장하기'}).click();
