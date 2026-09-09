@@ -19,9 +19,9 @@ export const Result = forwardRef<HTMLDivElement, { result: Diagnosis; answers: C
       <h2 id="advice-title">지금 느끼고 있는 문제를 해결하고 싶다면,<br /><span className="highlight">아래와 같이 운영해보세요!</span></h2>
       {result.provisionalBranch && <p className="review-note">온라인·오프라인 안내를 함께 보여드려요. 우리 가게의 운영 방식에 맞는 내용을 확인해 주세요.</p>}
       {result.advice.map(({ key, content, context }) => <div className="advice" key={key}>
-        {context && <div className="advice-context"><Emoji name={key.endsWith('online') ? 'cart' : 'store'} /><span>{context}</span></div>}
+        {context && <div className="advice-context"><span>{context}</span></div>}
         <div className="advice-heading"><p className="advice-caption">발견된 항목</p><h3><span className="problem-icon"><Emoji name={OPTION_ICONS[2][answers[2]]} /></span><span className="problem-name">{content[0]}</span></h3></div>
-        {content.slice(1).map((text, i) => <div className="advice-row" key={i}><h4><Emoji name={['idea', 'tools', 'notice'][i]} /><span>{['상황 해결', '구조 개선', '주의 사항'][i]}</span></h4><p>{text}</p></div>)}
+        {content.slice(1).map((text, i) => <div className="advice-row" key={i}><h4><span>{['상황 해결', '구조 개선', '주의 사항'][i]}</span></h4><p>{text}</p></div>)}
       </div>)}
     </section>
     <section className="rsection" aria-labelledby="products-title">

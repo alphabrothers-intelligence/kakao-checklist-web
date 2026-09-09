@@ -168,11 +168,16 @@ dialog .guide{width:100%;justify-content:flex-start;gap:10px;font-size:14px}dial
 /* Keep a word space when responsive rules collapse an authored line break. */
 .desktop-space{display:inline}
 
-/* Result hierarchy: match section labels to their numbers and stack the problem heading. */
+/* Use spacing and a context badge for hierarchy without faint or tiny labels. */
 .result .sectionno{font-family:Small;font-size:15px;font-weight:700;color:#222}
 .result .section-index{font:inherit}
-.result .advice-heading{padding-bottom:21px;border-bottom:1px solid #dedede}
-.result .advice .advice-caption{font-family:Small;font-size:18px;font-weight:700;color:#171717;margin:0 0 12px;line-height:1.4}
+.result .advice .advice-context{display:inline-flex;width:fit-content;padding:9px 14px;margin:0 0 24px;border-radius:10px;background:#EEF1F4;font-family:Small;font-size:18px;font-weight:400;line-height:1.5;color:#303A46}
+.result .advice-context>span:last-child{background:none}
+.result .advice-heading{padding-bottom:24px;border-bottom:1px solid #dedede}
+.result .advice .advice-caption{font-family:Small;font-size:18px;font-weight:400;color:#3E4447;margin:0 0 10px;line-height:1.5}
 .result .advice h3{padding:0;border:0;display:flex;align-items:center;gap:10px;margin:0}
-.result .advice .problem-name{font-family:Big;font-size:24px;font-weight:700;background:linear-gradient(transparent 72%,#FAE100 72%,#FAE100 94%,transparent 94%)}
-@media(max-width:600px){.result .advice .advice-caption{font-size:17px}.result .advice .problem-name{font-size:22px}}
+.result .advice .problem-name{font-family:Big;font-size:28px;font-weight:700;color:#171717;background:none}
+.result .advice .problem-icon .product-icon{width:28px;height:28px}
+.result .advice-row h4{font-family:Small;font-size:17px;font-weight:700;color:#303A46}
+.result .advice .advice-row p{font-size:16px;line-height:1.8;color:#3E4447}
+@media(max-width:600px){.result .advice .advice-context,.result .advice .advice-caption{font-size:17px}.result .advice .problem-name{font-size:26px}.result .advice-row h4{font-size:16px}}
