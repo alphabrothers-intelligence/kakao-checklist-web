@@ -38,7 +38,11 @@ npm run preview
 4. Output Directory: **dist**
 5. 환경 변수: **현재 없음**
 
-Preview Deployment에서 점검 후 Production으로 승격합니다. 로컬 구현/빌드 완료와 실제 배포는 구분됩니다. 아직 Vercel 계정·프로젝트 연결이나 인터넷 공개 배포는 하지 않았습니다.
+현재 배포 주소: https://kakao-checklist-web.vercel.app
+
+GitHub: https://github.com/alphabrothers-intelligence/kakao-checklist-web
+
+Vercel 프로젝트 `intelligence2/kakao-checklist-web`에 GitHub 저장소를 연결했습니다. 실무자 검토를 위해 현재 분기 안내를 유지한 버전을 배포했습니다.
 
 공식 안내: https://vercel.com/docs/frameworks/frontend/vite
 

@@ -19,7 +19,6 @@
 
 ## 아직 수행하지 않은 것
 
-- Vercel 계정/프로젝트 연결 및 인터넷 공개 배포.
 - 실제 iOS Safari·Android 기기·카카오톡 인앱 브라우저 검증. Chrome 모바일 에뮬레이션만 검증함.
 - 실무자 협의 후 메뉴얼·스타터킷 실제 URL 연결.
 
@@ -50,3 +49,12 @@
 전체 브라우저 검사 재현: `node scripts/verify-all-combinations.mjs http://127.0.0.1:5174`. 프로덕션 빌드를 먼저 준비하고 해당 주소에 미리보기 서버를 실행한다. 데스크톱 Chrome에서 실제 라디오 선택·다음·결과·다시 진단하기를 반복하며 화면의 원문 일치를 검사한다. 이 검사는 모바일 실기기 검사를 대체하지 않는다.
 
 실행 결과: **700/700 통과**, 브라우저 런타임 오류 0개. 미선택 시 다음 버튼 비활성화, 단계별 선택지 수, 단일 선택, 결과의 정확한 문구·순서·선택 요약, 다시 진단 후 초기화를 전 조합에서 확인했다. 결과 로그: `artifacts/qa/all-combinations.json`. 별도 `verify-browser.mjs` 회귀 검사도 통과했다(모바일 에뮬레이션, 답변 복구, PNG/PDF 다운로드, 가이드 모달 포함).
+
+## GitHub 및 Vercel 연결 (2026-09-09)
+
+- GitHub 저장소: https://github.com/alphabrothers-intelligence/kakao-checklist-web (`main`).
+- Vercel 프로젝트: `intelligence2/kakao-checklist-web`, GitHub 저장소 연결 완료.
+- 배포 주소: https://kakao-checklist-web.vercel.app
+- Vercel 배포 상태 READY 확인. `.vercelignore`에서 앱의 `src/data`가 제외되던 문제를 수정.
+- 분기 정책과 가이드 목적지는 실무자 협의 후 변경하며 현재 동작을 유지.
+- 배포 주소 대상 Chrome 검사 통과: 진단·답변 복구·데스크톱/모바일 에뮬레이션·PNG/PDF 다운로드·다시 진단·가이드 모달.
