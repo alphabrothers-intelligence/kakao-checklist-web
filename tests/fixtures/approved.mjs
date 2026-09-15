@@ -1,72 +1,19 @@
-// Independently transcribed from the user's supplied tables, not from app data.
-export const industries = ['음식점/카페','미용/뷰티','병원/의료','의류/패션','소매/판매점','교육/학원','부동산/생활 서비스'];
-export const top = [
-`우리매장 맵광고|지도에서 근처 손님 눈에 바로 띄어요
-우리채널 알리기|친구 추가할 때만 비용 발생해 부담 없이 시작할 수 있어요
-채널 메시지|쿠폰, 소식 등을 보내 다시 찾아오게 만들어요`,
-`우리매장 맵광고|지도 검색만으로 신규 손님을 만날 수 있어요
-우리채널 알리기|손님을 채널 친구로 빠르게 모을 수 있어요
-채널 메시지|시술 주기에 맞춰 재방문을 리마인드해요`,
-`카카오비즈보드|연령·지역 필터링으로 폭넓게 노출돼요
-비즈니스폼|톡 안에서 바로 상담 신청을 받을 수 있어요
-키워드광고|찾는 손님에게만 노출을 써 예산 낭비를 줄일 수 있어요`,
-`카카오비즈보드|신상품을 넓은 타겟에 빠르게 알릴 수 있어요
-카카오모먼트 디스플레이|놓친 손님을 다시 데려올 수 있어요
-채널 메시지|할인 소식으로 구매를 유도해요`,
-`우리매장 맵광고|지도에서 근처 손님 눈에 바로 띄어요
-우리채널 알리기|적은 비용으로 단골 채널을 모을 수 있어요
-키워드광고|찾는 손님에게 노출, 방문 전환율을 높일 수 있어요`,
-`카카오비즈보드|학부모·학생층에 폭넓게 알릴 수 있어요
-비즈니스폼|상담·설명회 신청을 놓치지 않아요
-채널 메시지|개강·모집 소식과 재등록을 홍보할 수 있어요`,
-`키워드광고|견적·상담을 찾는 손님에게 바로 노출돼요
-비즈니스폼|전화 없이도 견적 문의를 받을 수 있어요
-우리매장 맵광고|동네 기반 업체는 지도 노출로 추가 유입돼요`
-].map(s=>s.split('\n').map(row=>row.split('|')));
-export const advice = [
-`유입 부족
-사이트 앞까지 손님이 오지 않고 있어요. 검색·온라인 채널 노출부터 넓혀보세요.
-광고를 누르고 들어온 페이지에 원하는 내용이 보이도록 개선해 보세요
-노출만 늘리면 소용없어요. 로딩 속도와 모바일 화면부터 확인하세요.`,
-`유입 부족
-근처 손님도 우리 매장을 모르고 있어요. 지도·검색에 위치, 사진, 영업시간부터 정확히 업로드해 보세요.
-찾아온 손님이 헤매지 않게 오시는 길과 예약 방법을 눈에 띄게 정리해 보세요.
-노출만 늘리면 소용없어요. 매장 사진과 후기부터 매력적인지 확인해 보세요.`,
-`관심 부족
-광고는 보는데 반응이 없어요. 문구와 이미지를 손님 입장에서 다시 작성해 보세요.
-타겟팅을 관심사·연령으로 좁혀서, 반응할 손님에게만 노출해 보세요.
-소재 여러 개를 동시에 테스트해서 반응 좋은 것만 남겨 보세요.`,
-`전환 부족
-관심은 있는데 전환이 일어나고 있지 않아요. 구매·예약 버튼 위치부터 확인하세요.
-상담·예약형이면 문의 창구를 한 번에, 구매형이면 결제 단계를 최대한 줄이세요.
-가격이나 절차가 부담스럽진 않은지 점검하고, 첫 구매·예약에는 혜택을 추가해 주세요.`,
-`재구매 부족
-한 번 오고 다시 안 와요. 다시 연락할 수 있는 채널부터 만들어두세요.
-채널 친구를 모아두고, 재방문 시점에 맞춰 쿠폰·리마인드를 보내세요.
-메시지를 너무 자주 보내면 오히려 떠나요. 꼭 필요할 때만 보내세요.`,
-`측정 부족
-광고 효과가 눈에 안 보여요. 전환 추적 코드부터 설치하고 CPA 기준을 다시 점검해 보세요.
-어떤 채널·소재가 실제 구매·문의로 이어졌는지 추적해서, 성과 낮은 곳은 예산을 줄여 보세요.
-예산을 한 번에 쓰지 마세요. 소액으로 반응부터 확인하고 늘려가세요.`,
-`측정 부족
-광고 보고 몇 명이 왔는지 알 수가 없어요. 쿠폰 사용, 전화 문의, 예약 건수처럼 셀 수 있는 지표부터 만들어 보세요.
-소재에 "이 쿠폰을 보여주세요" 같은 확인 장치를 넣어서, 광고로 온 손님을 구분하세요.
-정확한 숫자보다 광고 전후로 방문·문의가 늘었는지 흐름을 파악해 주세요.`
-].map(s=>s.split('\n'));
-export const pairs = [
-['우리매장 알리기|카카오비즈보드','채널 메시지|카카오모먼트 디스플레이','카카오비즈보드|우리매장 맵광고','우리채널 알리기|채널 메시지'],
-['카카오비즈보드|키워드광고','채널 메시지|카카오모먼트 디스플레이','카카오비즈보드|카카오모먼트 디스플레이','우리채널 알리기|채널 메시지'],
-['우리매장 맵광고|키워드광고','채널 메시지|비즈니스폼','카카오비즈보드|우리매장 맵광고','우리채널 알리기|채널 메시지'],
-['카카오비즈보드|비즈니스폼','채널 메시지|비즈니스폼','카카오비즈보드|카카오모먼트 디스플레이','우리채널 알리기|채널 메시지'],
-['카카오비즈보드|키워드광고','채널 메시지|카카오모먼트 디스플레이','카카오비즈보드|카카오모먼트 디스플레이','우리채널 알리기|채널 메시지']
-].map(row=>row.map(s=>s.split('|')));
-export const paths=['오프라인 방문형','온라인 구매형','예약 방문형','상담 전환형','플랫폼 이동형'];
-export const situations=['유입 부족','관심 부족','전환 부족','재구매 부족','측정 부족'];
-export const goals=['신규 고객 확보','기존 고객 재방문 유도','브랜드 인지도 높이기','고객 관계 강화'];
-// Explicit QA expectation for CURRENT fallback, not a newly approved routing rule.
-export const adviceRoutes = [[1,2,3,4,6],[0,2,3,4,5],[[0,1],2,3,4,[5,6]],[[0,1],2,3,4,[5,6]],[[0,1],2,3,4,[5,6]]];
-export const cases=[];
-for(let i=0;i<7;i++) for(let p=0;p<5;p++) for(let s=0;s<5;s++) for(let g=0;g<4;g++) {
- const indices=[adviceRoutes[p][s]].flat();
- cases.push({answers:[i,p,s,g],top:top[i],products:pairs[p][g],advice:indices.map(n=>advice[n]),contexts:indices.map(n=>[0,5].includes(n)?'온라인 사이트':[1,6].includes(n)?'오프라인 매장':null),chips:[industries[i],paths[p],situations[s],goals[g]]});
+// Parse the supplied document independently of app data; preserve table order and copy.
+import { readFileSync } from 'node:fs';
+const text = readFileSync(new URL('./approved-2026-09-15.md', import.meta.url), 'utf8');
+const tables = [...text.matchAll(/(?:^\|.*\n?)+/gm)].map(m => m[0].trim().split('\n').map(row => row.split('|').slice(1,-1).map(s => s.trim())));
+const product = cell => cell.split(' — ');
+export const industries = tables[0].slice(2).map(row => row[0].split(' *')[0]);
+export const top = tables[0].slice(2).map(row => row.slice(1).map(product));
+export const paths = tables[6].slice(2).map(row => row[0]);
+export const situations = tables[1][0].slice(1);
+export const goals = tables[6][0].slice(1);
+export const cases = [];
+for (let i=0;i<6;i++) for (let p=0;p<5;p++) for (let s=0;s<5;s++) for (let g=0;g<4;g++) {
+ cases.push({answers:[i,p,s,g],top:top[i],products:tables[6][p+2][g+1].split(' / ').map(product),advice:[tables[p+1].slice(2).map(row=>row[s+1])],chips:[industries[i],paths[p],situations[s],goals[g]]});
 }
+export const questions = text.split(/step\d - /).slice(1).map(block => {
+ const lines=block.split('\n');
+ const choices=lines.filter(line=>line.startsWith('- '));
+ return {title:lines.slice(1).find(line=>line.trim()).trim().replace(/^Q\. /,''),options:choices.map(line=>line.startsWith('- [')?line.slice(3,line.indexOf(']')):line.slice(2,line.indexOf(' ('))),desc:Object.fromEntries(choices.map((line,i)=>[i,line.startsWith('- [')?line.slice(line.indexOf(']')+1).trim():line.slice(line.indexOf(' (')+2).replace(/\)+$/,'').replace(/\s*,\s*/g,', ')]))};
+});

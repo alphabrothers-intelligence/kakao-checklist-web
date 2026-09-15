@@ -6,7 +6,7 @@ export function Question({ step, selected, onSelect, onBack, onNext }: { step: n
   return <div className="container">
     <div className="topnav"><button className="back" aria-label="이전" onClick={onBack}>←</button><span className="count" aria-live="polite">{step + 1} / 4</span></div>
     <div className="progress" aria-label={`${step + 1}/4 단계`}>{STEPS.map((_, i) => <span key={i} className={i <= step ? 'on' : ''} />)}</div>
-    <div className="question"><p className="step-label"><span className="step-number">0{step + 1}</span><span>{STEP_LABELS[step]}</span></p>
+    <div className="question"><p className="step-label"><span className="step-number">STEP {step + 1}</span><span>{STEP_LABELS[step]}</span></p>
       <h1 tabIndex={-1} id="question-title">{question.title.split('<br>').map((line, i) => <span key={line}>{i > 0 && <br />}{i > 0 && <span className="desktop-space"> </span>}{line}</span>)}</h1>
       <p className="sub" id="question-description">{question.sub}</p>
     </div>
