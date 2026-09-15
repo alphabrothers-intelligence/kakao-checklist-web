@@ -11,6 +11,7 @@ describe('provided diagnosis mapping', () => {
       expect(new Set(value.products.map(p => p[0])).size).toBe(2);
       for (const advice of value.advice) expect(advice.content).toHaveLength(4);
       expect(value.advice.every(v => v.content.every(t => t.length > 0))).toBe(true);
+      expect(value.guide).toMatch(/^https:\/\/alphabrothers\.notion\.site\/[0-9a-f]+$/);
       count++;
     }
     expect(count).toBe(OPTION_COUNTS.reduce((a,b) => a*b, 1));
@@ -29,6 +30,11 @@ describe('provided diagnosis mapping', () => {
       const result = getDiagnosis([i,1,0,0]);
       expect(result.products).toEqual(base.products); expect(result.advice).toEqual(base.advice);
     }
+  });
+  it('matches each of the 20 guides to its own Q2 x Q4 pair', () => {
+    const guides = Array.from({length:5},(_,p)=>Array.from({length:4},(_,g)=>getDiagnosis([0,p,g===0?0:1,g]).guide));
+    expect(new Set(guides.flat()).size).toBe(20);
+    for (let p=0;p<5;p++) for (let g=0;g<4;g++) for (let i=0;i<6;i++) for (let s=0;s<5;s++) expect(getDiagnosis([i,p,s,g]).guide).toBe(guides[p][g]);
   });
   it('selects path-specific advice for every problem including reservation and platform', () => {
     for(let s=0;s<5;s++) expect(new Set(Array.from({length:5},(_,p)=>getDiagnosis([0,p,s,0]).advice[0].content[0])).size).toBe(5);

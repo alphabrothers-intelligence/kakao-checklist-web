@@ -15,6 +15,7 @@ export const PATH_LABELS = source.STEPS[1].options;
 export const TOP = source.TOP as Record<string, string[][]>;
 export const ADVICE = source.ADVICE;
 export const PAIRS = source.PAIRS;
+export const GUIDES = source.GUIDES;
 
 export function validAnswers(input: unknown): input is Answers {
   return Array.isArray(input) && input.length === 4 && input.every((v, i) => v === null || (Number.isInteger(v) && v >= 0 && v < OPTION_COUNTS[i]));
@@ -51,6 +52,7 @@ export function getDiagnosis(answers: CompleteAnswers) {
     top: TOP[industry],
     advice: [{ key: `${pathIndex}_${situation}`, content: ADVICE[pathIndex][situation] }],
     products: PAIRS[pathIndex][goalIndex],
+    guide: GUIDES[pathIndex][goalIndex],
   };
 }
 export type Diagnosis = ReturnType<typeof getDiagnosis>;

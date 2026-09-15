@@ -14,10 +14,10 @@ function Modal({ title, children, onClose, busy = false }: { title: string; chil
     <h2>{title}</h2>{children}<button className="textbtn" onClick={onClose} disabled={busy}>닫기</button>
   </dialog>;
 }
-export function GuideDialog({ onClose }: { onClose: () => void }) {
+export function GuideDialog({ guide, onClose }: { guide: string; onClose: () => void }) {
   return <Modal title="광고 가이드 확인하기" onClose={onClose}>
     <div className="guide-options">
-    <button className="guide" disabled><Emoji name="edu" /><span>나에게 딱 맞는 광고 가이드 확인하기</span><small>준비 중</small></button>
+    <a className="guide" href={guide} target="_blank" rel="noopener noreferrer"><Emoji name="edu" /><span>나에게 딱 맞는 광고 가이드 확인하기</span></a>
     <button className="guide" disabled><Emoji name="bag" /><span>스타터킷 전체 보러가기</span><small>준비 중</small></button>
     </div>
   </Modal>;
