@@ -26,7 +26,7 @@ export const Result = forwardRef<HTMLDivElement, { result: Diagnosis; answers: C
     </section>
     <section className="rsection" aria-labelledby="advice-title">
       <span className="sectionno"><span className="section-index">03</span>지금 필요한 운영 방법<span className="section-art"><Emoji name="search" /></span></span>
-      <h2 id="advice-title">지금 느끼고 있는 문제를 해결하고 싶다면,<br /><span className="highlight">아래와 같이 운영해 보세요!</span></h2>
+      <h2 id="advice-title"><span className="heading-phrase">지금 느끼고 있는 문제를</span>{' '}<span className="heading-phrase">해결하고 싶다면,</span><br /><span className="highlight">아래와 같이 운영해 보세요!</span></h2>
       {result.advice.map(({ key, content }) => <div className="advice" key={key}>
         <div className="advice-heading"><p className="advice-caption">현재 문제</p><h3><span className="problem-icon"><Emoji name={OPTION_ICONS[2][answers[2]]} /></span><span className="problem-name">{content[0]}</span></h3></div>
         {content.slice(1).map((text, i) => <div className="advice-row" key={i}><h4><span>{['상황 해결', '구조 개선', '주의 사항'][i]}</span></h4><p>{text}</p></div>)}

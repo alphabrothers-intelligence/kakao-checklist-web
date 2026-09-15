@@ -302,3 +302,20 @@ body:has(.options) .option{border-radius:16px}
 .result .type-summary{border:0;background:rgb(12 9 10 / .04)}
 .result .type-summary .sectionno{margin-bottom:19px}
 .result .actions .save{background:rgb(250 213 36 / .2);border-color:rgb(250 213 36 / .2);color:var(--ink)}
+
+/* Keep mobile copy in readable phrases without changing approved wording. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.result h1,.result h2{word-break:keep-all;overflow-wrap:normal;text-wrap:balance}
+.result p,.answer-value{word-break:keep-all;overflow-wrap:break-word;text-wrap:pretty}
+.result .advice h3{display:grid;grid-template-columns:28px minmax(0,1fr);align-items:start;gap:10px}
+.result .advice .problem-icon{align-self:start;margin-top:3px}
+.result .advice .problem-name{word-break:keep-all;overflow-wrap:break-word;text-wrap:pretty}
+.heading-phrase{display:inline-block;max-width:100%}
+@media(max-width:600px){
+ .result .rsection h2{font-size:clamp(20px,5.6vw,23px);line-height:1.55}
+ .result .advice .problem-name{font-size:17px;line-height:1.65}
+ .result .advice .advice-row p{font-size:15px;line-height:1.85}
+}
+
+body:has(.options) .question h1{word-break:keep-all;overflow-wrap:break-word;text-wrap:balance}
+body:has(.options) .label small{text-wrap:pretty}
