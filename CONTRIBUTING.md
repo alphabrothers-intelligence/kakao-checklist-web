@@ -36,7 +36,7 @@ npm run dev
 | 측정된 결과를 Canvas에 직접 그리기 | `src/lib/renderResultCanvas.ts` |
 | 글꼴·색상·반응형·모션 | `src/styles.css` |
 | 이모지 렌더링 | `src/components/Emoji.tsx`, `public/emoji/` |
-| 캐릭터·글꼴 | `public/kakao-main-characters.svg`, `public/kakao-characters.svg`, `public/fonts/` |
+| 캐릭터·글꼴 | `public/kakao-main-characters.svg`, `public/kakao-result-characters.png`, `public/fonts/` |
 | 승인 원문·독립 기대 결과 | `tests/fixtures/approved-2026-09-15.md`, `tests/fixtures/approved.mjs` |
 | 단위 테스트 | `tests/diagnosis.test.ts`, `tests/approved-content.test.mjs` |
 | 브라우저 QA | `scripts/verify-browser.mjs`, `verify-all-combinations.mjs`, `verify-reported-export.mjs` |
@@ -73,14 +73,14 @@ npm run dev
 - 모든 글꼴은 Kakao Big Sans Regular/Bold를 사용합니다. 화면과 저장 이미지에 같은 글꼴을 적용합니다.
 - 키 컬러는 `#0C090A`, `#FAD524`입니다. 흰 배경과 키 컬러 투명도를 사용하며 원본 캐릭터·이모지 색상은 유지합니다.
 - 질문 단계는 STEP 1~4, 결과 카드는 01~04입니다. 선택 안내는 ‘선택해주세요’입니다.
-- 선택지는 살짝 둥근 사각형, 진행·결과 버튼은 캡슐형입니다. PC 다음 버튼은 선택지 한 칸 너비에 맞춥니다.
+- 선택지는 살짝 둥근 사각형, 진행·결과 버튼은 캡슐형입니다. 다음 버튼은 모든 화면에서 하단 콘텐츠 전체 너비에 맞춥니다.
 - 모바일 메인은 글 → 캐릭터 → 시작 버튼 순서입니다. 고정 버튼이 선택지를 가리지 않아야 합니다.
 - 결과 카드는 동일한 옅은 배경·라운드이며 01 카드에 별도 테두리를 넣지 않습니다.
 - 응답 값은 옅은 노란 배경, 제목 핵심 문구는 노란 밑줄, 광고 순위는 노란 원형 숫자입니다. TOP1 광고명에는 밑줄을 넣지 않습니다.
-- ‘현재 문제’ 라벨은 옅게 표시합니다. 문제 아이콘과 문장은 분리된 열로 정렬합니다.
+- 현재 문제·상황 해결·구조 개선·주의 사항은 같은 폰트 크기와 옅은 색으로 표시합니다. 문제 아이콘과 문장은 분리된 열로 정렬합니다.
 - 하단은 다시 테스트하기(흰색), 결과 다운로드하기(노랑 20%), 광고 가이드 확인하기(키 컬러) 순서입니다.
-- 메인·결과 캐릭터는 SVG 원본을 사용합니다. PNG를 확대하거나 원본을 저해상도로 변환하지 않습니다.
-- 01 카드 체크는 제공된 TossFace에서 추출한 `public/emoji/2705.png`입니다.
+- 메인은 SVG, 결과는 지정된 메인 캐릭터 PNG 원본을 사용하며 기존 모션을 유지합니다.
+- 결과 카드 우측 상단 이모지는 제거하고 문제 앞에는 고정 핀 `public/emoji/1f4cc.png`를 사용합니다.
 - 긴 제목은 의미 단위로 묶고 단어 유지·균형 줄바꿈을 적용합니다. 문구를 줄여 맞추거나 글자를 무조건 작게 만들지 않습니다.
 - 동작 줄이기 설정을 지원합니다. 저장 시에는 정지된 최종 위치를 사용합니다.
 
@@ -244,3 +244,5 @@ vercel inspect <이번-배포-URL> --scope intelligence2
 - `.vercelignore` 변경 시 `src/data/source.json`과 현재 사용 중인 `public/` 자산이 배포에 포함되는지 확인합니다.
 - 토큰·환경 파일·`node_modules`·`dist`·`.vercel`·검증 산출물은 커밋하지 않습니다.
 - `data/`, `preview/`의 원본과 이전 시안은 배포에서 제외합니다. 재현 테스트의 원문 fixture는 별도로 Git에 포함합니다.
+
+저장 파일명은 `카카오 광고 자가 진단 체크리스트.png`와 `카카오 광고 자가 진단 체크리스트.pdf`입니다.
