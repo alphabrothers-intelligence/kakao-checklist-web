@@ -1,9 +1,10 @@
-import { chromium } from '@playwright/test';
+import { chromium, webkit } from '@playwright/test';
 import { mkdir, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const baseURL = process.argv[2] || process.env.APP_URL || 'http://127.0.0.1:5173';
-const dir = 'artifacts/browser'; await mkdir(dir, {recursive:true});
-const browser = await chromium.launch({channel:'chrome',headless:true});
+const safari = process.argv.includes('--webkit');
+const dir = safari ? 'artifacts/browser-webkit' : 'artifacts/browser'; await mkdir(dir, {recursive:true});
+const browser = safari ? await webkit.launch({headless:true}) : await chromium.launch({channel:'chrome',headless:true});
 const page = await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:2});
 const errors=[];page.on('pageerror',error=>errors.push(error.message));
 await page.goto(baseURL + '/');
