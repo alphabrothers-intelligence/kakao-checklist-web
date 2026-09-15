@@ -59,10 +59,10 @@ export async function exportResult(element: HTMLElement, format: ExportFormat): 
     const pageWidth = 595.28, pageHeight = pageWidth * canvas.height / canvas.width;
     if (pageHeight > 14400) throw new Error('결과가 너무 길어요. 이미지로 저장해 주세요.');
     pdf.addPage([pageWidth, pageHeight]).drawImage(image, { x: 0, y: 0, width: pageWidth, height: pageHeight });
-    pdf.setTitle('우리 사업 광고 진단 결과'); pdf.setCreator('우리 사업 광고 자가진단');
+    pdf.setTitle('카카오 광고 자가 진단 체크리스트'); pdf.setCreator('우리 사업 광고 자가진단');
     blob = new Blob([new Uint8Array(await pdf.save())], { type: 'application/pdf' });
   }
-  const result = { blob, filename: `우리_사업_광고_진단결과.${format}`, width: canvas.width, height: canvas.height };
+  const result = { blob, filename: `카카오 광고 자가 진단 체크리스트.${format}`, width: canvas.width, height: canvas.height };
   canvas.width = 0; canvas.height = 0;
   return result;
 }
