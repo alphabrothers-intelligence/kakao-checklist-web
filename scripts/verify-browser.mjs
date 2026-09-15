@@ -52,9 +52,24 @@ async function checkResultHierarchy(target){
   problems:[...document.querySelectorAll('.advice-heading')].map(n=>({label:n.querySelector('.advice-caption').textContent,size:parseFloat(getComputedStyle(n.querySelector('.advice-caption')).fontSize),weight:getComputedStyle(n.querySelector('.advice-caption')).fontWeight,bottom:n.querySelector('.advice-caption').getBoundingClientRect().bottom,titleTop:n.querySelector('h3').getBoundingClientRect().top}))
  }));
  assert.ok(layout.sections.length===4 && layout.sections.every(n=>n.size===n.numberSize && Number(n.weight)>=700));
- assert.ok(layout.problems.length>0 && layout.problems.every(n=>n.label==='현재 문제' && n.size>=17 && Number(n.weight)===400 && n.titleTop>=n.bottom));
+ assert.ok(layout.problems.length>0 && layout.problems.every(n=>n.label==='현재 문제' && n.size>=16 && Number(n.weight)===400 && n.titleTop>=n.bottom));
 }
 await checkResultHierarchy(page);
+assert.equal(await page.locator('.section-art').count(),0);
+assert.equal(await page.locator('.problem-icon img').getAttribute('src'),'/emoji/1f4cc.png');
+assert.equal(await page.locator('.result-character').getAttribute('src'),'/kakao-result-characters.png');
+for(const width of [320,390,768,1024,1440]){
+ const probe=await browser.newPage({viewport:{width,height:844}});
+ await probe.goto(baseURL);
+ await probe.getByRole('button',{name:'광고 자가 진단 시작하기'}).click();
+ const geometry=await probe.evaluate(()=>{
+  const options=document.querySelector('.options').getBoundingClientRect();
+  const button=document.querySelector('.dock .primary').getBoundingClientRect();
+  return {difference:Math.abs(options.width-button.width),bottom:button.bottom,height:innerHeight};
+ });
+ assert.ok(geometry.difference<1 && geometry.bottom<=geometry.height && geometry.bottom>=geometry.height-40);
+ await probe.close();
+}
 
 await page.screenshot({path:`${dir}/desktop-result.png`,animations:'disabled',fullPage:true});
 const buttons=await page.locator('.actions button').evaluateAll(nodes=>nodes.map(n=>({width:n.getBoundingClientRect().width,top:n.getBoundingClientRect().top})));
@@ -64,7 +79,7 @@ assert.equal(await page.locator('dialog .primary').first().textContent(),'PDF로
 for(const [format,name] of [['png','이미지로 저장'],['pdf','PDF로 저장']]){
  const pending=page.waitForEvent('download',{timeout:90000});
  await page.getByRole('button',{name,exact:true}).click();
- const download=await pending;await download.saveAs(`${dir}/result.${format}`);
+ const download=await pending;assert.equal(download.suggestedFilename().normalize("NFC"),`카카오 광고 자가 진단 체크리스트.${format}`);await download.saveAs(`${dir}/result.${format}`);
  await page.getByRole('button',{name,exact:true}).waitFor({state:'visible'});
 }
 await page.getByRole('button',{name:'닫기',exact:true}).click();

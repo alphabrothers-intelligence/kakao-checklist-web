@@ -319,3 +319,15 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 
 body:has(.options) .question h1{word-break:keep-all;overflow-wrap:break-word;text-wrap:balance}
 body:has(.options) .label small{text-wrap:pretty}
+
+/* Keep the question action across the full content width at every viewport. */
+body:has(.options) .container{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
+body:has(.options) .dock{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:calc(100% - 112px);max-width:1120px;margin:0;padding:16px 0 calc(12px + env(safe-area-inset-bottom));background:linear-gradient(transparent,#FFFFFF 16px)}
+body:has(.options) .dock .primary{width:100%}
+.result .sectionno{padding-right:0}
+.result .advice .advice-caption,.result .advice-row h4{font-size:17px;color:rgb(12 9 10 / .65)}
+@media(max-width:600px){.result .advice .advice-caption,.result .advice-row h4{font-size:16px}}
+@media(max-width:767px){body:has(.options) .dock{width:calc(100% - 48px)}}
+@media(max-width:767px){body:has(.options) .container{width:calc(100% - 48px)}}
+body:has(.options) .container{padding-left:0;padding-right:0}
+@media(min-width:768px){body:has(.options) .container{width:calc(100% - 112px);max-width:1120px}}

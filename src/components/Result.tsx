@@ -1,8 +1,7 @@
 import { forwardRef } from 'react';
-import { OPTION_ICONS, type CompleteAnswers, type Diagnosis } from '../lib/diagnosis';
-import { Emoji } from './Emoji';
+import { type CompleteAnswers, type Diagnosis } from '../lib/diagnosis';
 
-export const Result = forwardRef<HTMLDivElement, { result: Diagnosis; answers: CompleteAnswers; onRestart: () => void; onSave: () => void; onGuide: () => void }>(function Result({ result, answers, onRestart, onSave, onGuide }, ref) {
+export const Result = forwardRef<HTMLDivElement, { result: Diagnosis; answers: CompleteAnswers; onRestart: () => void; onSave: () => void; onGuide: () => void }>(function Result({ result, onRestart, onSave, onGuide }, ref) {
   return <div className="container result" ref={ref}>
     <div className="result-hero">
       <div className="result-hero-copy">
@@ -10,30 +9,30 @@ export const Result = forwardRef<HTMLDivElement, { result: Diagnosis; answers: C
         <h1 tabIndex={-1}>우리 사업에 딱 맞는 광고,<br /><span className="highlight">이렇게 시작해 보세요</span></h1>
         <p className="lead">어떤 광고를 활용하고, 무엇부터 개선하면 좋을지 알려드려요.</p>
       </div>
-      <img className="result-character" src="/kakao-characters.svg" width="351" height="324" alt="손을 흔들며 반기는 카카오 캐릭터" />
+      <img className="result-character" src="/kakao-result-characters.png" width="486" height="279" alt="함께 모여 있는 카카오 캐릭터" />
     </div>
     <section className="rsection type-summary" aria-labelledby="type-title">
-      <span className="sectionno"><span className="section-index">01</span>나의 광고 타입<span className="section-art"><Emoji name="check" /></span></span>
+      <span className="sectionno"><span className="section-index">01</span>나의 광고 타입</span>
       <h2 id="type-title">선택한 답변으로 알아본<br /><span className="highlight">우리 사업의 광고 타입이에요.</span></h2>
       <dl className="answer-summary">
         {[['업종', result.industry], ['고객 행동', result.path], ['현재 문제', result.situation], ['목표', result.goal]].map(([label, value]) => <div key={label}><dt>{label}</dt><dd><span className="answer-value">{value}</span></dd></div>)}
       </dl>
     </section>
     <section className="rsection" aria-labelledby="industry-title">
-      <span className="sectionno"><span className="section-index">02</span>우리 업종에 맞는 광고<span className="section-art"><Emoji name="chart" /></span></span>
+      <span className="sectionno"><span className="section-index">02</span>우리 업종에 맞는 광고</span>
       <h2 id="industry-title">우리 업종 사장님들이 사용하는<br /><span className="highlight">카카오 광고 TOP3</span></h2>
       <div className="rank-list">{result.top.map(([name, reason], i) => <div className="rank" key={name}><div className="ranknum">{i + 1}</div><div><h3>{name}</h3><p>{reason}</p></div></div>)}</div>
     </section>
     <section className="rsection" aria-labelledby="advice-title">
-      <span className="sectionno"><span className="section-index">03</span>지금 필요한 운영 방법<span className="section-art"><Emoji name="search" /></span></span>
+      <span className="sectionno"><span className="section-index">03</span>지금 필요한 운영 방법</span>
       <h2 id="advice-title"><span className="heading-phrase">지금 느끼고 있는 문제를</span>{' '}<span className="heading-phrase">해결하고 싶다면,</span><br /><span className="highlight">아래와 같이 운영해 보세요!</span></h2>
       {result.advice.map(({ key, content }) => <div className="advice" key={key}>
-        <div className="advice-heading"><p className="advice-caption">현재 문제</p><h3><span className="problem-icon"><Emoji name={OPTION_ICONS[2][answers[2]]} /></span><span className="problem-name">{content[0]}</span></h3></div>
+        <div className="advice-heading"><p className="advice-caption">현재 문제</p><h3><span className="problem-icon"><img className="product-icon toss-emoji" src="/emoji/1f4cc.png" alt="" aria-hidden="true" width={28} height={28} /></span><span className="problem-name">{content[0]}</span></h3></div>
         {content.slice(1).map((text, i) => <div className="advice-row" key={i}><h4><span>{['상황 해결', '구조 개선', '주의 사항'][i]}</span></h4><p>{text}</p></div>)}
       </div>)}
     </section>
     <section className="rsection" aria-labelledby="products-title">
-      <span className="sectionno"><span className="section-index">04</span>우리 사업 유형에 맞는 광고<span className="section-art"><Emoji name="target" /></span></span>
+      <span className="sectionno"><span className="section-index">04</span>우리 사업 유형에 맞는 광고</span>
       <h2 id="products-title">우리 사업 유형에 맞는<br /><span className="highlight">카카오 광고는 무엇일까요?</span></h2>
       <p className="sub">{result.path}인 우리 사업,<br /><strong>{result.goal}</strong>를 위해 아래 광고 유형을 추천해요.</p>
       {result.products.map(([name, reason], i) => <div className="recommend" key={name}><span>{i + 1}</span><div><h3>{name}</h3><p>{reason}</p></div></div>)}
