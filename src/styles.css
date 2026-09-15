@@ -32,7 +32,7 @@
 @media(max-width:600px){.advice-row{grid-template-columns:1fr;gap:7px;padding:20px 0}.advice{margin-top:24px}.advice h3{gap:10px;padding-bottom:18px}.problem-name{font-size:20px}.advice-row h4{font-size:13px}.advice .advice-row p{font-size:15px}.sectionno{font-size:12px}}
 
 /* Result hierarchy inspired by the supplied event reference */
-.result{max-width:880px}.result .rsection{margin-top:38px;padding:34px 32px 36px;background:rgb(12 9 10 / 0.04);border:0;border-radius:0}.result .rsection h2{font-size:29px;line-height:1.55;margin-bottom:28px;letter-spacing:-.045em}.result .sectionno{color:rgb(12 9 10 / 0.65);margin-bottom:19px}.result .section-index{font-size:15px}.rank-list{background:white;border-radius:24px;padding:6px 26px}.rank{padding:25px 0;align-items:baseline;gap:18px}.rank:last-child{padding-bottom:25px}.rank h3{font-size:23px}.rank p{font-size:15px;line-height:1.7;color:rgb(12 9 10 / 0.65)}.ranknum{background:none;border-radius:0;font-size:16px;width:28px;min-width:28px;height:auto;color:rgb(12 9 10 / 0.65)}.rank:first-of-type .ranknum{background:none;color:#0C090A}.rank:first-child h3{display:inline;background:linear-gradient(transparent 72%,#FAD524 72%,#FAD524 94%,transparent 94%)}
+.result{max-width:880px}.result .rsection{margin-top:38px;padding:34px 32px 36px;background:rgb(12 9 10 / 0.04);border:0;border-radius:0}.result .rsection h2{font-size:29px;line-height:1.55;margin-bottom:28px;letter-spacing:-.045em}.result .sectionno{color:rgb(12 9 10 / 0.65);margin-bottom:19px}.result .section-index{font-size:15px}.rank-list{background:white;border-radius:24px;padding:6px 26px}.rank{padding:25px 0;align-items:baseline;gap:18px}.rank:last-child{padding-bottom:25px}.rank h3{font-size:23px}.rank p{font-size:15px;line-height:1.7;color:rgb(12 9 10 / 0.65)}.ranknum{background:none;border-radius:0;font-size:16px;width:28px;min-width:28px;height:auto;color:rgb(12 9 10 / 0.65)}.rank:first-of-type .ranknum{background:none;color:#0C090A}.rank:first-child h3{display:inline;background:none}
 .result .advice{background:white;border-radius:24px;padding:27px;margin-top:18px}.advice h3{padding-bottom:21px}.advice-row{padding:22px 0}.advice-row h4{font-size:15px}.advice .advice-row p{font-size:16px;color:#0C090A}.result .recommend{background:#FFFFFF;border:0;border-radius:0;padding:24px;margin-top:2px;font-family:Big;font-size:22px;gap:18px}.result .recommend:first-of-type{border-radius:20px 20px 0 0;margin-top:24px}.result .recommend:last-child{border-radius:0 0 20px 20px}.recommend span{border-radius:50%;font:700 14px Big;width:30px;height:30px}.result .rsection>.sub{font-size:16px;line-height:1.8;color:rgb(12 9 10 / 0.65)}.result .rsection>.sub strong{font-weight:700;background:linear-gradient(transparent 65%,#FAD524 65%)}
 .actions{margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:12px}.actions .guide-primary{grid-column:1/-1;grid-row:1;background:#FAD524;border-color:#FAD524;font-size:18px;font-weight:700;border-radius:14px;padding:21px}.actions .save{background:white;border-color:rgb(12 9 10 / 0.04);font-weight:400}.actions button{border-radius:12px}#guideDialog .guide{width:100%;font-size:14px}
 @media(max-width:600px){.result .rsection{margin:32px -24px 0;padding:28px 24px 32px}.result .rsection h2{font-size:25px;line-height:1.5}.rank-list{padding:3px 20px;border-radius:22px}.rank{gap:12px}.rank h3{font-size:20px}.rank p{font-size:14px}.result .advice{padding:22px;border-radius:22px}.advice .advice-row p{font-size:15px}.result .recommend{font-size:19px;padding:21px}.actions button{font-size:14px;padding:15px 10px}.actions .guide-primary{font-size:17px;padding:19px}.result h1{font-size:34px}}
@@ -176,7 +176,7 @@ dialog .guide{width:100%;justify-content:flex-start;gap:10px;font-size:14px}dial
 .result .advice .advice-context{display:inline-flex;width:fit-content;padding:9px 14px;margin:0 0 24px;border-radius:10px;background:rgb(12 9 10 / 0.04);font-family:Big;font-size:18px;font-weight:400;line-height:1.5;color:#0C090A}
 .result .advice-context>span:last-child{background:none}
 .result .advice-heading{padding-bottom:24px;border-bottom:1px solid rgb(12 9 10 / 0.04)}
-.result .advice .advice-caption{font-family:Big;font-size:18px;font-weight:400;color:#0C090A;margin:0 0 10px;line-height:1.5}
+.result .advice .advice-caption{font-family:Big;font-size:18px;font-weight:400;color:rgb(12 9 10 / 0.65);margin:0 0 10px;line-height:1.5}
 .result .advice h3{padding:0;border:0;display:flex;align-items:center;gap:10px;margin:0}
 .result .advice .problem-name{font-family:Big;font-size:28px;font-weight:700;color:#0C090A;background:none}
 .result .advice .problem-icon .product-icon{width:28px;height:28px}
@@ -252,7 +252,7 @@ body:has(.options) .dock .primary{width:100%;border-radius:999px}
 .answer-summary>div{padding:17px 0;border-bottom:1px solid rgb(12 9 10 / .1)}
 .answer-summary>div:last-child{border:0}.answer-summary{gap:0}
 .answer-summary dt{font-weight:400}.answer-summary dd{font-weight:700}
-.result .rank:first-child h3{display:inline;background:linear-gradient(transparent 72%,var(--yellow) 72%,var(--yellow) 94%,transparent 94%)}
+.result .rank:first-child h3{display:inline;background:none}
 .result-badge{border-radius:999px}
 dialog{width:min(480px,calc(100% - 32px));padding:32px;border-radius:28px}
 dialog .guide{padding:18px 20px;white-space:normal}dialog .guide span{flex:1;text-align:left}dialog .guide small{font-size:11px}
@@ -301,4 +301,4 @@ body:has(.options) .option{border-radius:16px}
 /* Match the summary card to its peers and distinguish the two actions. */
 .result .type-summary{border:0;background:rgb(12 9 10 / .04)}
 .result .type-summary .sectionno{margin-bottom:19px}
-.result .actions .save{background:var(--ink);border-color:var(--ink);color:var(--yellow)}
+.result .actions .save{background:rgb(250 213 36 / .2);border-color:rgb(250 213 36 / .2);color:var(--ink)}
