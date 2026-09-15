@@ -27,7 +27,6 @@ export function SaveDialog({ resultRef, onClose }: { resultRef: RefObject<HTMLDi
   const formats: ExportFormat[] = mobile ? ['png', 'pdf'] : ['pdf', 'png'];
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
-  const [file, setFile] = useState<{ url: string; name: string } | null>(null);
   const busyRef = useRef(false);
   const urlRef = useRef<string | null>(null);
   useEffect(() => () => { if (urlRef.current) URL.revokeObjectURL(urlRef.current); }, []);
@@ -38,9 +37,8 @@ export function SaveDialog({ resultRef, onClose }: { resultRef: RefObject<HTMLDi
       const result = await exportResult(resultRef.current, format);
       if (urlRef.current) URL.revokeObjectURL(urlRef.current);
       const url = URL.createObjectURL(result.blob); urlRef.current = url;
-      setFile({ url, name: result.filename });
       const link = document.createElement('a'); link.href = url; link.download = result.filename; document.body.append(link); link.click(); link.remove();
-      setMessage('파일을 준비했어요. 저장이 시작되지 않으면 아래 링크를 눌러주세요.');
+      setMessage('');
     } catch (error) { setMessage(error instanceof Error ? error.message : '저장하지 못했어요. 다시 시도해 주세요.'); }
     finally { busyRef.current = false; setBusy(false); }
   }
@@ -48,6 +46,5 @@ export function SaveDialog({ resultRef, onClose }: { resultRef: RefObject<HTMLDi
     <p>테스트 결과 및 광고 추천 내용을<br />이미지 또는 PDF로 저장해 두세요.</p>
     {formats.map((format, i) => <button key={format} className={`primary ${i ? 'close' : ''}`} disabled={busy} onClick={() => void save(format)}>{format === 'png' ? '이미지로 저장' : 'PDF로 저장'}</button>)}
     <p className="save-status" role="status" aria-live="polite">{message}</p>
-    {file && <div className="file-links"><a href={file.url} download={file.name}>파일 다운로드</a><a href={file.url} target="_blank" rel="noreferrer">파일 열기</a><small>모바일에서는 열린 파일의 공유 메뉴로 저장할 수 있어요.</small></div>}
   </Modal>;
 }

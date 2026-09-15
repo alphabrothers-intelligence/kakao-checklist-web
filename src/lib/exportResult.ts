@@ -18,7 +18,7 @@ async function embeddedFontCSS() {
 }
 let fontCSSPromise: Promise<string> | undefined;
 export async function exportResult(element: HTMLElement, format: ExportFormat): Promise<ExportedFile> {
-  const { toCanvas } = await import('html-to-image');
+  const { toSvg } = await import('html-to-image');
   await document.fonts.ready;
   // Capture the settled character position even when downloading during its entrance.
   element.getAnimations({ subtree: true }).forEach(animation => {
@@ -53,15 +53,43 @@ export async function exportResult(element: HTMLElement, format: ExportFormat): 
     const copy = element.cloneNode(true) as HTMLElement;
     copy.querySelectorAll('[data-export-ignore]').forEach(node => node.remove());
     doc.body.append(copy);
+    // Start font loading explicitly before measuring the offscreen result.
+    await Promise.all([
+      doc.fonts.load('400 16px Big'),
+      doc.fonts.load('700 32px Big'),
+    ]);
     await doc.fonts.ready;
     await Promise.all([...copy.querySelectorAll('img')].map(image => image.decode()));
     width = Math.ceil(copy.getBoundingClientRect().width);
     height = Math.ceil(copy.scrollHeight);
     if (height * 3 > 30000 || width * height * 9 > 100_000_000) throw new Error('결과가 너무 커서 저장하지 못했어요.');
-    canvas = await toCanvas(copy, {
-      backgroundColor: '#fff', pixelRatio: 3, skipAutoScale: true, width, height, fontEmbedCSS,
+    const svgURL = await toSvg(copy, {
+      width, height, fontEmbedCSS,
       style: { margin: '0', boxSizing: 'border-box' },
     });
+    // Give the SVG its final physical resolution before the browser decodes it.
+    // Enlarging a screen-sized SVG only in drawImage can blur foreignObject text.
+    const svgDocument = new DOMParser().parseFromString(decodeURIComponent(svgURL.slice(svgURL.indexOf(',') + 1)), 'image/svg+xml');
+    const svg = svgDocument.documentElement;
+    const pixelWidth = width * 3, pixelHeight = height * 3;
+    svg.setAttribute('width', String(pixelWidth));
+    svg.setAttribute('height', String(pixelHeight));
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    // Keep the HTML layout at its CSS dimensions while the SVG rasterizes at 3x.
+    const content = svg.querySelector('foreignObject');
+    content?.setAttribute('width', String(width));
+    content?.setAttribute('height', String(height));
+    const image = new Image();
+    image.decoding = 'sync';
+    image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(new XMLSerializer().serializeToString(svg))}`;
+    await image.decode();
+    canvas = document.createElement('canvas');
+    canvas.width = pixelWidth; canvas.height = pixelHeight;
+    const context = canvas.getContext('2d');
+    if (!context) throw new Error('이미지 저장 화면을 만들지 못했어요. 다시 시도해 주세요.');
+    context.fillStyle = '#fff'; context.fillRect(0, 0, pixelWidth, pixelHeight);
+    context.drawImage(image, 0, 0);
+    image.src = '';
   } finally { frame.remove(); }
   if (canvas.width < width * 2.9 || canvas.height < height * 2.9) throw new Error('고해상도 저장에 실패했어요. 기본 브라우저에서 다시 시도해 주세요.');
   const png = await new Promise<Blob>((resolve, reject) => canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('이미지 생성에 실패했어요. 다시 시도해 주세요.')), 'image/png'));
