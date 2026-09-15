@@ -1,43 +1,28 @@
 export type ExportFormat = 'png' | 'pdf';
 export interface ExportedFile { blob: Blob; filename: string; width: number; height: number }
 
-async function embeddedFontCSS() {
-  const fonts = [
-    { name: 'Big', weight: 700, url: '/fonts/KakaoBigSans-Bold.woff2' },
-    { name: 'Big', weight: 400, url: '/fonts/KakaoBigSans-Regular.woff2' },
-  ];
-  return (await Promise.all(fonts.map(async ({ name, weight, url }) => {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error('폰트를 불러오지 못했어요. 연결 상태를 확인하고 다시 시도해 주세요.');
-    const dataURL = await new Promise<string>((resolve, reject) => {
-      const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = reject;
-      response.blob().then(blob => reader.readAsDataURL(blob), reject);
-    });
-    return `@font-face{font-family:${name};font-weight:${weight};src:url(${dataURL}) format('woff2');}`;
-  }))).join('\n');
-}
-let fontCSSPromise: Promise<string> | undefined;
 export async function exportResult(element: HTMLElement, format: ExportFormat): Promise<ExportedFile> {
-  const { toSvg } = await import('html-to-image');
+  const { renderResultCanvas } = await import('./renderResultCanvas');
   await document.fonts.ready;
   // Capture the settled character position even when downloading during its entrance.
   element.getAnimations({ subtree: true }).forEach(animation => {
     if (Number.isFinite(animation.effect?.getComputedTiming().endTime)) animation.finish();
   });
   await Promise.all([...element.querySelectorAll('img')].map(image => image.decode()));
-  fontCSSPromise ??= embeddedFontCSS().catch(error => { fontCSSPromise = undefined; throw error; });
-  const fontEmbedCSS = await fontCSSPromise;
   // Render in an isolated viewport: PNG always uses mobile layout, PDF desktop layout.
   const frame = document.createElement('iframe');
   frame.title = '결과 저장용 화면'; frame.setAttribute('aria-hidden', 'true'); frame.tabIndex = -1;
   const viewportWidth = format === 'png' ? 390 : 1080;
   frame.style.cssText = `position:fixed;left:-20000px;top:0;width:${viewportWidth}px;height:1000px;border:0;pointer-events:none;`;
   document.body.append(frame);
+  const scale = format === 'png' ? 3 : 2;
   let canvas: HTMLCanvasElement;
   let width: number;
   let height: number;
   try {
     const doc = frame.contentDocument!;
+    const viewport = doc.createElement('meta'); viewport.name = 'viewport';
+    viewport.content = `width=${viewportWidth}, initial-scale=1`; doc.head.append(viewport);
     const base = doc.createElement('base'); base.href = document.baseURI; doc.head.append(base);
     const styles = [...document.querySelectorAll('style, link[rel="stylesheet"]')];
     await Promise.all(styles.map(source => new Promise<void>((resolve, reject) => {
@@ -49,7 +34,7 @@ export async function exportResult(element: HTMLElement, format: ExportFormat): 
       if (copy.tagName !== 'LINK') resolve();
     })));
     const freeze = doc.createElement('style');
-    freeze.textContent = '*{animation:none!important;transition:none!important}'; doc.head.append(freeze);
+    freeze.textContent = 'html{-webkit-text-size-adjust:100%;text-size-adjust:100%}*{animation:none!important;transition:none!important}'; doc.head.append(freeze);
     const copy = element.cloneNode(true) as HTMLElement;
     copy.querySelectorAll('[data-export-ignore]').forEach(node => node.remove());
     doc.body.append(copy);
@@ -62,36 +47,9 @@ export async function exportResult(element: HTMLElement, format: ExportFormat): 
     await Promise.all([...copy.querySelectorAll('img')].map(image => image.decode()));
     width = Math.ceil(copy.getBoundingClientRect().width);
     height = Math.ceil(copy.scrollHeight);
-    if (height * 3 > 30000 || width * height * 9 > 100_000_000) throw new Error('결과가 너무 커서 저장하지 못했어요.');
-    const svgURL = await toSvg(copy, {
-      width, height, fontEmbedCSS,
-      style: { margin: '0', boxSizing: 'border-box' },
-    });
-    // Give the SVG its final physical resolution before the browser decodes it.
-    // Enlarging a screen-sized SVG only in drawImage can blur foreignObject text.
-    const svgDocument = new DOMParser().parseFromString(decodeURIComponent(svgURL.slice(svgURL.indexOf(',') + 1)), 'image/svg+xml');
-    const svg = svgDocument.documentElement;
-    const pixelWidth = width * 3, pixelHeight = height * 3;
-    svg.setAttribute('width', String(pixelWidth));
-    svg.setAttribute('height', String(pixelHeight));
-    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
-    // Keep the HTML layout at its CSS dimensions while the SVG rasterizes at 3x.
-    const content = svg.querySelector('foreignObject');
-    content?.setAttribute('width', String(width));
-    content?.setAttribute('height', String(height));
-    const image = new Image();
-    image.decoding = 'sync';
-    image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(new XMLSerializer().serializeToString(svg))}`;
-    await image.decode();
-    canvas = document.createElement('canvas');
-    canvas.width = pixelWidth; canvas.height = pixelHeight;
-    const context = canvas.getContext('2d');
-    if (!context) throw new Error('이미지 저장 화면을 만들지 못했어요. 다시 시도해 주세요.');
-    context.fillStyle = '#fff'; context.fillRect(0, 0, pixelWidth, pixelHeight);
-    context.drawImage(image, 0, 0);
-    image.src = '';
+    canvas = await renderResultCanvas(copy, scale);
   } finally { frame.remove(); }
-  if (canvas.width < width * 2.9 || canvas.height < height * 2.9) throw new Error('고해상도 저장에 실패했어요. 기본 브라우저에서 다시 시도해 주세요.');
+  if (canvas.width !== width * scale || canvas.height !== height * scale) throw new Error('고해상도 저장에 실패했어요. 기본 브라우저에서 다시 시도해 주세요.');
   const png = await new Promise<Blob>((resolve, reject) => canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('이미지 생성에 실패했어요. 다시 시도해 주세요.')), 'image/png'));
   let blob = png;
   if (format === 'pdf') {
