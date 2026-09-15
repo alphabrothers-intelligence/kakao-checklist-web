@@ -114,6 +114,9 @@ await mobile.screenshot({path:`${dir}/mobile-result.png`,animations:'disabled',f
 await mobile.getByRole('button',{name:'결과 다운로드하기'}).click();
 assert.equal(await mobile.locator('dialog .primary').first().textContent(),'이미지로 저장');
 const mobileDownload=mobile.waitForEvent('download',{timeout:90000});await mobile.getByRole('button',{name:'이미지로 저장',exact:true}).click();await (await mobileDownload).saveAs(`${dir}/mobile-result.png-export.png`);
+const mobilePdf=mobile.waitForEvent('download',{timeout:90000});
+await mobile.getByRole('button',{name:'PDF로 저장',exact:true}).click();
+await (await mobilePdf).saveAs(`${dir}/mobile-result.pdf`);
 await mobile.getByRole('button',{name:'닫기',exact:true}).click();
 await mobile.setViewportSize({width:320,height:700});
 assert.ok(await mobile.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));

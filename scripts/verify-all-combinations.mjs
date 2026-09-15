@@ -4,10 +4,12 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { cases } from '../tests/fixtures/approved.mjs';
 const browser=await chromium.launch({channel:'chrome',headless:true});
 const baseURL=process.argv[2]||'http://127.0.0.1:5174';
+const mobile=process.argv.includes('--mobile');
+const profile=mobile?'mobile':'desktop';
 const passed=[], errors=[];
 try {
  await Promise.all(Array.from({length:4},async(_,worker)=>{
-  const page=await browser.newPage({viewport:{width:1440,height:1000}});
+  const page=await browser.newPage({viewport:mobile?{width:390,height:844}:{width:1440,height:1000},isMobile:mobile,hasTouch:mobile});
   page.on('pageerror',e=>errors.push(e.message));
   await page.goto(baseURL);
   for(let n=worker;n<cases.length;n+=4){
@@ -39,6 +41,6 @@ try {
  assert.deepEqual(errors,[]);
  assert.equal(passed.length,600);
  await mkdir('artifacts/qa',{recursive:true});
- await writeFile('artifacts/qa/all-combinations.json',JSON.stringify({baseURL,passed:passed.length,errors,answers:passed},null,2));
+ await writeFile(`artifacts/qa/all-combinations-${profile}.json`,JSON.stringify({baseURL,profile,passed:passed.length,errors,answers:passed},null,2));
  console.log('PASS: all 600 real UI selection flows and exact result content.');
 } finally {await browser.close();}
