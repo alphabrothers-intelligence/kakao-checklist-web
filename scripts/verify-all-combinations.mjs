@@ -12,9 +12,9 @@ try {
   await page.goto(baseURL);
   for(let n=worker;n<cases.length;n+=4){
    const c=cases[n];
-   await page.getByRole('button',{name:'광고 진단 시작하기',exact:true}).click();
+   await page.getByRole('button',{name:'광고 자가 진단 시작하기',exact:true}).click();
    for(let step=0;step<4;step++){
-    await expect(page.getByRole('radio')).toHaveCount([7,5,5,4][step]);
+    await expect(page.getByRole('radio')).toHaveCount([6,5,5,4][step]);
     await expect(page.getByRole('button',{name:step===3?'결과 보기':'다음',exact:true})).toBeDisabled();
     await page.getByRole('radio').nth(c.answers[step]).check();
     await expect(page.getByRole('radio',{checked:true})).toHaveCount(1);
@@ -23,23 +23,22 @@ try {
    await page.locator('.result').waitFor();
    const actual=await page.evaluate(()=>({
     top:[...document.querySelectorAll('.rank')].map(n=>[n.querySelector('h3').textContent,n.querySelector('p').textContent]),
-    products:[...document.querySelectorAll('.recommend')].map(n=>[...n.childNodes].filter(c=>c.nodeType===Node.TEXT_NODE).map(c=>c.textContent).join('')),
+    products:[...document.querySelectorAll('.recommend')].map(n=>[n.querySelector('h3').textContent,n.querySelector('p').textContent]),
     advice:[...document.querySelectorAll('.advice')].map(n=>[n.querySelector('.problem-name').textContent,...[...n.querySelectorAll('.advice-row p')].map(p=>p.textContent)]),
-    contexts:[...document.querySelectorAll('.advice')].map(n=>n.querySelector('.advice-context span')?.textContent??null),
-    chips:[...document.querySelectorAll('.chip')].map(n=>n.textContent)
+    chips:[...document.querySelectorAll('.answer-summary dd')].map(n=>n.textContent)
    }));
    const {answers,...expected}=c;
    assert.deepEqual(actual,expected,`Answers ${answers}`);
    assert.equal(await page.locator('.review-note').count(),c.advice.length===2?1:0);
    passed.push(answers);
-   if(passed.length%100===0) console.log(`${passed.length}/700 browser cases passed`);
-   await page.getByRole('button',{name:'다시 진단하기',exact:true}).click();
+   if(passed.length%100===0) console.log(`${passed.length}/600 browser cases passed`);
+   await page.getByRole('button',{name:'다시 테스트하기',exact:true}).click();
   }
   await page.close();
  }));
  assert.deepEqual(errors,[]);
- assert.equal(passed.length,700);
+ assert.equal(passed.length,600);
  await mkdir('artifacts/qa',{recursive:true});
- await writeFile('artifacts/qa/all-combinations.json',JSON.stringify({baseURL,passed:passed.length,dualBranchCases:168,errors,answers:passed},null,2));
- console.log('PASS: all 700 real UI selection flows and exact result content; 168 use the documented dual-branch fallback.');
+ await writeFile('artifacts/qa/all-combinations.json',JSON.stringify({baseURL,passed:passed.length,errors,answers:passed},null,2));
+ console.log('PASS: all 600 real UI selection flows and exact result content.');
 } finally {await browser.close();}
