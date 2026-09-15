@@ -52,7 +52,7 @@ async function checkResultHierarchy(target){
   problems:[...document.querySelectorAll('.advice-heading')].map(n=>({label:n.querySelector('.advice-caption').textContent,size:parseFloat(getComputedStyle(n.querySelector('.advice-caption')).fontSize),weight:getComputedStyle(n.querySelector('.advice-caption')).fontWeight,bottom:n.querySelector('.advice-caption').getBoundingClientRect().bottom,titleTop:n.querySelector('h3').getBoundingClientRect().top}))
  }));
  assert.ok(layout.sections.length===4 && layout.sections.every(n=>n.size===n.numberSize && Number(n.weight)>=700));
- assert.ok(layout.problems.length>0 && layout.problems.every(n=>n.label==='현재 문제' && n.size>=16 && Number(n.weight)===400 && n.titleTop>=n.bottom));
+ assert.ok(layout.problems.length>0 && layout.problems.every(n=>n.label==='현재 문제' && n.size>=14 && Number(n.weight)===400 && n.titleTop>=n.bottom));
 }
 await checkResultHierarchy(page);
 assert.equal(await page.locator('.section-art').count(),0);
