@@ -6,9 +6,43 @@
 - 결과 ①: Q1 업종 → TOP3 광고명·이유. 원문의 Q1-1은 별도 질문 정의가 없어 6개 대분류 기준으로 연결.
 - 결과 ②: Q2 경로 × Q3 문제 → 발견된 문제·상황 해결·구조 개선·주의 사항 25개 조합.
 - 결과 ③: Q2 경로 × Q4 목표 → 추천 광고 2개·각 추천 이유 20개 조합.
+- 광고 가이드 링크: Q2 경로 × Q4 목표 → 노션 가이드 20개. 결과 ③과 같은 축이다.
 - 온라인·오프라인 동시 표시 임시 분기 제거.
 - RULES_VERSION: `2026-09-15.1`. 이전 버전 답변은 초기화.
 - 질문의 중복 닫는 괄호와 쉼표 주변 공백만 정리.
+
+## 광고 가이드 링크 (2026년 9월 16일 추가)
+
+결과 화면의 **광고 가이드 확인하기** 창에서 첫 번째 버튼이 여는 노션 문서다.
+
+- 선택 기준은 `GUIDES[Q2 경로][Q4 목표]` 하나뿐이다. **Q1 업종과 Q3 문제는 관여하지 않는다.** 따라서 600개 답변 조합이 20개 가이드로 모인다.
+- 주소는 `src/data/source.json`의 `GUIDES`에 `[경로][목표]` 5 × 4 배열로 둔다. 배열 순서는 `STEPS[1].options`, `STEPS[3].options`와 같아야 한다.
+- `getDiagnosis()`가 `guide` 필드로 돌려주고, `src/components/Dialogs.tsx`의 `GuideDialog`가 링크로 연다.
+- 같은 창의 두 번째 버튼 **스타터 키트 전체 보러가기**는 진단 결과와 무관한 고정 링크이며 `Dialogs.tsx`의 `STARTER_KIT_URL`에 있다.
+- `tests/diagnosis.test.ts`가 600개 조합 전부에서 가이드 주소 형식과, 20개가 서로 겹치지 않으면서 Q2·Q4로만 갈리는지 검증한다.
+
+| 전환 경로 (Q2) | 광고 목표 (Q4) | 가이드 페이지 제목 | 주소 |
+| --- | --- | --- | --- |
+| 오프라인 방문형 | 신규 고객 확보 | [오프라인 방문형] '신규 고객 확보'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80f48551e1b361181882 |
+| 오프라인 방문형 | 관심·인지도 높이기 | [오프라인 방문형] '관심·인지도 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec8073b2accf6a3b5d8a51 |
+| 오프라인 방문형 | 전환율 높이기 | [오프라인 방문형] '전환율 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec802e8ff3d6e6d9144c30 |
+| 오프라인 방문형 | 재방문·재구매 유도 | [오프라인 방문형] '재방문·재구매 유도'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80d4b04ad64f28e6c67e |
+| 예약 전환형 | 신규 고객 확보 | [예약 전환형] '신규 고객 확보'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec809ca89ad814d1f0bc35 |
+| 예약 전환형 | 관심·인지도 높이기 | [예약 전환형] '관심·인지도 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80e2b2a5d7a17fd3e23c |
+| 예약 전환형 | 전환율 높이기 | [예약 전환형] '전환율 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec8021aff3cc5e51df921c |
+| 예약 전환형 | 재방문·재구매 유도 | [예약 전환형] '재방문·재구매 유도'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80f784edfbb21e50b088 |
+| 온라인 전환형 | 신규 고객 확보 | [온라인 전환형] '신규 고객 확보'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80ecb16cd5616a049eac |
+| 온라인 전환형 | 관심·인지도 높이기 | [온라인 전환형] '관심·인지도 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80039c58e8f39bd5b1e5 |
+| 온라인 전환형 | 전환율 높이기 | [온라인 전환형] '전환율 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec8031840cc9fa45edd6cc |
+| 온라인 전환형 | 재방문·재구매 유도 | [온라인 전환형] '재방문·재구매 유도'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80919771ce0135af5019 |
+| 플랫폼 이용형 | 신규 고객 확보 | [플랫폼 이용형] '신규 고객 확보'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec8090aadcc94a0062ab43 |
+| 플랫폼 이용형 | 관심·인지도 높이기 | [플랫폼 이용형] '관심·인지도 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec8095bba1d2eb38f3063b |
+| 플랫폼 이용형 | 전환율 높이기 | [플랫폼 이용형] '전환율 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80d988abca25d927eed3 |
+| 플랫폼 이용형 | 재방문·재구매 유도 | [플랫폼 이용형] '재방문·재구매 유도'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec800eab20d5e9beea8b06 |
+| 상담 전환형 | 신규 고객 확보 | [상담 전환형] '신규 고객 확보'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80649747c589b029fe4c |
+| 상담 전환형 | 관심·인지도 높이기 | [상담 전환형] '관심·인지도 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80d88d4eccdd02436b43 |
+| 상담 전환형 | 전환율 높이기 | [상담 전환형] '전환율 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec8064a5f0c7c611e142fb |
+| 상담 전환형 | 재방문·재구매 유도 | [상담 전환형] '재방문·재구매 유도'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec8061ab70e05903b705ef |
 
 ## 제공된 원문
 
