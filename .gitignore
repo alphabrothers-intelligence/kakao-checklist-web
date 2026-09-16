@@ -6,3 +6,5 @@ dist/
 !.env.example
 *.tsbuildinfo
 artifacts/
+.serena/
+graphify-out/
