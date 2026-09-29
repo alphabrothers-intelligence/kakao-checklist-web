@@ -8,7 +8,8 @@ const token = import.meta.env.VITE_MIXPANEL_TOKEN;
 const INTERNAL_KEY = 'kakao-ad-check:internal';
 
 if (token) {
-  mixpanel.init(token, { autocapture: true, persistence: 'localStorage' });
+  // autocapture 는 끕니다. 설계표 21종만 보내고, SDK 가 만드는 [Auto] 이벤트는 중복입니다.
+  mixpanel.init(token, { persistence: 'localStorage' });
   // ?internal=1 로 한 번 들어오면 그 브라우저는 계속 내부 트래픽으로 표시합니다.
   if (new URLSearchParams(location.search).has('internal')) localStorage.setItem(INTERNAL_KEY, '1');
   mixpanel.register({ is_internal: localStorage.getItem(INTERNAL_KEY) === '1' });
