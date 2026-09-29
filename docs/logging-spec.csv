@@ -1,0 +1,462 @@
+﻿[1] 로그 설계표 — 무엇을 심을지,,,,,,,,,,,,,,,,,
+시나리오,client_access_time,ip,device_id,user_id,device,app_version,user_properties,page_name,action,object_section,object_type,object_id,object_name,object_position,event_properties,필수여부,비고
+인트로 화면 진입,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",intro,pageview,,,,,,{},필수,SPA 해시 라우팅이라 화면 전환마다 직접 발생
+인트로 > 진단 시작 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",intro,click,cta,button,start_diagnosis,광고 자가 진단 시작하기,,{},필수,
+질문 화면 진입,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",diagnosis_question,pageview,,,,,,"{
+    step: {1~4},
+    step_name: {단계명}
+}",필수,"4개 스텝 공통, step으로 구분"
+질문 > 선택지 선택,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",diagnosis_question,select,option_list,option,{옵션 ID},{옵션 라벨},{위에서부터 0},"{
+    step: {1~4},
+    step_name: {단계명},
+    is_change: true/false(바꿔 고른 경우 true)
+}",필수,옵션 ID 20종은 [선택지 ID] 시트
+질문 > 이전 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",diagnosis_question,click,topnav,button,back,이전,,"{
+    step: {1~4}
+}",필수,
+질문 > 다음 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",diagnosis_question,click,dock,button,next,다음,,"{
+    step: {1~3}
+}",필수,
+질문 > 결과 보기 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",diagnosis_question,click,dock,button,view_result,결과 보기,,"{
+    step: 4
+}",필수,
+결과 화면 진입,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",result,pageview,,,,,,"{
+    result_combo: {업종} {고객행동} {현재문제} {목표},
+    recommended_ads: [{추천광고1}, {추천광고2}],
+    top3_ads: [{TOP1}, {TOP2}, {TOP3}],
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}",필수,핵심 로그. result_combo=600종 / result_type=20종
+결과 > 섹션 스크롤 도달,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",result,scroll,rsection,section,{section_01~04},{섹션 제목},{01~04},"{
+    depth_percent: {25|50|75|100},
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}",선택,하단 가이드 버튼까지 안 내려간 이탈 확인용
+결과 > 다시 테스트 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",result,click,actions,button,restart,다시 테스트하기,,"{
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}",필수,
+결과 > 결과 다운로드 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",result,click,actions,button,open_download,결과 다운로드하기,,"{
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}",필수,다운로드 모달 열림
+결과 > 광고 가이드 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",result,click,actions,button,open_guide,광고 가이드 확인하기,,"{
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}",필수,가이드 모달 열림
+결과 > 다운로드 모달 > 이미지로 저장,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",result,click,download_dialog,button,download_png,이미지로 저장,{모바일 0 / PC 1},"{
+    format: png,
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}",필수,저장 성공 시점
+결과 > 다운로드 모달 > PDF로 저장,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",result,click,download_dialog,button,download_pdf,PDF로 저장,{모바일 1 / PC 0},"{
+    format: pdf,
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}",필수,저장 성공 시점
+결과 > 다운로드 모달 > 저장 실패,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",result,error,download_dialog,button,{download_png|download_pdf},{이미지로 저장|PDF로 저장},,"{
+    format: {png|pdf},
+    error_message: {에러 메시지},
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}",필수,저장 실패율
+결과 > 다운로드 모달 닫기,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",result,close,download_dialog,dialog,close_download_dialog,닫기,,"{
+    method: {button|backdrop|esc},
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}",필수,저장 안 하고 나간 비율
+결과 > 가이드 모달 > 맞춤 가이드 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",result,click,guide_dialog,link,custom_guide,나에게 딱 맞는 광고 가이드 확인하기,0,"{
+    guide_name: {결과유형과 동일한 20종 가이드 이름},
+    link_url: {가이드 URL — 우피 전환 시 값만 바뀜},
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}",필수,20종 가이드. URL이 아니라 guide_name 으로 집계할 것
+결과 > 가이드 모달 > 스타터 키트 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",result,click,guide_dialog,link,starter_kit,스타터 키트 전체 보러가기,1,"{
+    guide_name: 스타터 키트 전체,
+    link_url: {스타터 키트 URL},
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}",필수,전 결과 공통 단일 링크
+결과 > 가이드 모달 닫기,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",result,close,guide_dialog,dialog,close_guide_dialog,닫기,,"{
+    method: {button|backdrop|esc},
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}",필수,가이드 열고 아무것도 안 누른 이탈
+화면 오류 노출,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",{오류 발생 화면},error,error_boundary,screen,render_error,화면을 불러오지 못했어요,,"{
+    error_message: {에러 메시지}
+}",필수,장애 감지
+화면 오류 > 새로고침 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",{오류 발생 화면},click,error_boundary,button,reload,새로고침,,{},필수,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+[2] PA툴 로그 — 믹스패널에 실제로 쌓이는 모습,,,,,,,,,,,,,,,,,
+event_type 규칙: action=pageview → pageview@{page_name} / 나머지 → {action}@{object_type},,,,,,,,,,,,,,,,,
+시나리오,client_access_time,ip,device_id,user_id,device,app_version,event_type,user_properties,event_properties
+인트로 화면 진입,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),pageview@intro,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: intro
+}"
+인트로 > 진단 시작 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),click@button,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: intro,
+    object_section: cta,
+    object_id: start_diagnosis,
+    object_name: 광고 자가 진단 시작하기
+}"
+질문 화면 진입,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),pageview@diagnosis_question,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: diagnosis_question,
+    step: {1~4},
+    step_name: {단계명}
+}"
+질문 > 선택지 선택,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),select@option,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: diagnosis_question,
+    object_section: option_list,
+    object_id: {옵션 ID},
+    object_name: {옵션 라벨},
+    object_position: {위에서부터 0},
+    step: {1~4},
+    step_name: {단계명},
+    is_change: true/false(바꿔 고른 경우 true)
+}"
+질문 > 이전 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),click@button,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: diagnosis_question,
+    object_section: topnav,
+    object_id: back,
+    object_name: 이전,
+    step: {1~4}
+}"
+질문 > 다음 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),click@button,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: diagnosis_question,
+    object_section: dock,
+    object_id: next,
+    object_name: 다음,
+    step: {1~3}
+}"
+질문 > 결과 보기 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),click@button,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: diagnosis_question,
+    object_section: dock,
+    object_id: view_result,
+    object_name: 결과 보기,
+    step: 4
+}"
+결과 화면 진입,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),pageview@result,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: result,
+    result_combo: {업종} {고객행동} {현재문제} {목표},
+    recommended_ads: [{추천광고1}, {추천광고2}],
+    top3_ads: [{TOP1}, {TOP2}, {TOP3}],
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}"
+결과 > 섹션 스크롤 도달,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),scroll@section,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: result,
+    object_section: rsection,
+    object_id: {section_01~04},
+    object_name: {섹션 제목},
+    object_position: {01~04},
+    depth_percent: {25|50|75|100},
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}"
+결과 > 다시 테스트 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),click@button,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: result,
+    object_section: actions,
+    object_id: restart,
+    object_name: 다시 테스트하기,
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}"
+결과 > 결과 다운로드 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),click@button,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: result,
+    object_section: actions,
+    object_id: open_download,
+    object_name: 결과 다운로드하기,
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}"
+결과 > 광고 가이드 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),click@button,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: result,
+    object_section: actions,
+    object_id: open_guide,
+    object_name: 광고 가이드 확인하기,
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}"
+결과 > 다운로드 모달 > 이미지로 저장,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),click@button,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: result,
+    object_section: download_dialog,
+    object_id: download_png,
+    object_name: 이미지로 저장,
+    object_position: {모바일 0 / PC 1},
+    format: png,
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}"
+결과 > 다운로드 모달 > PDF로 저장,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),click@button,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: result,
+    object_section: download_dialog,
+    object_id: download_pdf,
+    object_name: PDF로 저장,
+    object_position: {모바일 1 / PC 0},
+    format: pdf,
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}"
+결과 > 다운로드 모달 > 저장 실패,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),error@button,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: result,
+    object_section: download_dialog,
+    object_id: {download_png|download_pdf},
+    object_name: {이미지로 저장|PDF로 저장},
+    format: {png|pdf},
+    error_message: {에러 메시지},
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}"
+결과 > 다운로드 모달 닫기,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),close@dialog,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: result,
+    object_section: download_dialog,
+    object_id: close_download_dialog,
+    object_name: 닫기,
+    method: {button|backdrop|esc},
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}"
+결과 > 가이드 모달 > 맞춤 가이드 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),click@link,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: result,
+    object_section: guide_dialog,
+    object_id: custom_guide,
+    object_name: 나에게 딱 맞는 광고 가이드 확인하기,
+    object_position: 0,
+    guide_name: {결과유형과 동일한 20종 가이드 이름},
+    link_url: {가이드 URL — 우피 전환 시 값만 바뀜},
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}"
+결과 > 가이드 모달 > 스타터 키트 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),click@link,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: result,
+    object_section: guide_dialog,
+    object_id: starter_kit,
+    object_name: 스타터 키트 전체 보러가기,
+    object_position: 1,
+    guide_name: 스타터 키트 전체,
+    link_url: {스타터 키트 URL},
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}"
+결과 > 가이드 모달 닫기,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),close@dialog,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: result,
+    object_section: guide_dialog,
+    object_id: close_guide_dialog,
+    object_name: 닫기,
+    method: {button|backdrop|esc},
+    result_type: {고객행동} x {목표},
+    industry: {선택한 업종},
+    path: {선택한 고객 행동},
+    situation: {선택한 현재 문제},
+    goal: {선택한 목표}
+}"
+화면 오류 노출,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),error@screen,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: {오류 발생 화면},
+    object_section: error_boundary,
+    object_id: render_error,
+    object_name: 화면을 불러오지 못했어요,
+    error_message: {에러 메시지}
+}"
+화면 오류 > 새로고침 버튼 클릭,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),click@button,"{
+    utm_medium: {utm},
+    utm_source: {utm},
+    utm_campaign: {utm},
+    utm_contents: {utm},
+    is_internal: true/false(내부 트래픽 여부)
+}","{
+    page_name: {오류 발생 화면},
+    object_section: error_boundary,
+    object_id: reload,
+    object_name: 새로고침
+}"

@@ -1,0 +1,21 @@
+﻿step,step_name,object_position,object_id,object_name
+1,우리 사업 이해하기,0,industry_food,식품
+1,우리 사업 이해하기,1,industry_fashion_beauty,패션/뷰티
+1,우리 사업 이해하기,2,industry_medical_health,의료/건강
+1,우리 사업 이해하기,3,industry_education_service,교육/전문 서비스
+1,우리 사업 이해하기,4,industry_life_leisure,생활/여가
+1,우리 사업 이해하기,5,industry_it_platform,IT/소프트웨어·플랫폼
+2,고객 행동 알아보기,0,path_offline_visit,오프라인 방문형
+2,고객 행동 알아보기,1,path_reservation,예약 전환형
+2,고객 행동 알아보기,2,path_online_convert,온라인 전환형
+2,고객 행동 알아보기,3,path_platform,플랫폼 이용형
+2,고객 행동 알아보기,4,path_consult,상담 전환형
+3,광고 문제 진단하기,0,situation_low_traffic,유입 부족
+3,광고 문제 진단하기,1,situation_low_interest,관심 부족
+3,광고 문제 진단하기,2,situation_low_conversion,전환 부족
+3,광고 문제 진단하기,3,situation_low_repurchase,재구매 부족
+3,광고 문제 진단하기,4,situation_no_measurement,성과 측정 부족
+4,광고 목표 설정하기,0,goal_acquisition,신규 고객 확보
+4,광고 목표 설정하기,1,goal_awareness,관심·인지도 높이기
+4,광고 목표 설정하기,2,goal_conversion,전환율 높이기
+4,광고 목표 설정하기,3,goal_retention,재방문·재구매 유도

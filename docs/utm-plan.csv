@@ -1,0 +1,20 @@
+﻿구분,광고ID,팀,목적,시작날짜,url,utm_medium,utm_source,utm_campaign,utm_contents,최종url,비고
+실사용자,1,마케팅,신규유저유입,2026-10-01,https://kakao-checklist-web.vercel.app/,message,kakao_channel,selfcheck_launch_2610,ch_msg_1,https://kakao-checklist-web.vercel.app/?utm_medium=message&utm_source=kakao_channel&utm_campaign=selfcheck_launch_2610&utm_contents=ch_msg_1,카카오톡 채널 발송 메시지
+실사용자,2,마케팅,신규유저유입,2026-10-01,https://kakao-checklist-web.vercel.app/,social,instagram,selfcheck_launch_2610,ig_feed_1,https://kakao-checklist-web.vercel.app/?utm_medium=social&utm_source=instagram&utm_campaign=selfcheck_launch_2610&utm_contents=ig_feed_1,인스타 피드 게시물
+실사용자,3,마케팅,신규유저유입,2026-10-01,https://kakao-checklist-web.vercel.app/,social,instagram,selfcheck_launch_2610,ig_story_1,https://kakao-checklist-web.vercel.app/?utm_medium=social&utm_source=instagram&utm_campaign=selfcheck_launch_2610&utm_contents=ig_story_1,인스타 스토리
+실사용자,4,마케팅,신규유저유입,2026-10-01,https://kakao-checklist-web.vercel.app/,social,kakao_openchat,selfcheck_launch_2610,opench_1,https://kakao-checklist-web.vercel.app/?utm_medium=social&utm_source=kakao_openchat&utm_campaign=selfcheck_launch_2610&utm_contents=opench_1,오픈채팅방 공유
+실사용자,5,콘텐츠,재방문유도,2026-10-01,https://kakao-checklist-web.vercel.app/,referral,notion,starter_kit_2610,sk_inline_1,https://kakao-checklist-web.vercel.app/?utm_medium=referral&utm_source=notion&utm_campaign=starter_kit_2610&utm_contents=sk_inline_1,스타터 키트 문서 내 링크
+실사용자,6,영업,신규유저유입,2026-10-01,https://kakao-checklist-web.vercel.app/,qr,offline,seminar_2610,qr_seminar_1,https://kakao-checklist-web.vercel.app/?utm_medium=qr&utm_source=offline&utm_campaign=seminar_2610&utm_contents=qr_seminar_1,오프라인 세미나 배포 QR
+실사용자,7,영업,신규유저유입,2026-10-01,https://kakao-checklist-web.vercel.app/,qr,offline,flyer_2610,qr_flyer_1,https://kakao-checklist-web.vercel.app/?utm_medium=qr&utm_source=offline&utm_campaign=flyer_2610&utm_contents=qr_flyer_1,전단지 QR
+실사용자,8,마케팅,리타겟,2026-11-01,https://kakao-checklist-web.vercel.app/,cpc,google,selfcheck_retarget_2611,ga_rt_1,https://kakao-checklist-web.vercel.app/?utm_medium=cpc&utm_source=google&utm_campaign=selfcheck_retarget_2611&utm_contents=ga_rt_1,구글 리타게팅 광고
+관리자,101,개발,배포확인,2026-10-01,https://kakao-checklist-web.vercel.app/,internal,dev,qa_deploy,deploy_check,https://kakao-checklist-web.vercel.app/?utm_medium=internal&utm_source=dev&utm_campaign=qa_deploy&utm_contents=deploy_check,배포 후 동작 확인. is_internal=true 와 함께 사용
+관리자,102,개발,QA,2026-10-01,https://kakao-checklist-web.vercel.app/,internal,qa,qa_regression,qa_test,https://kakao-checklist-web.vercel.app/?utm_medium=internal&utm_source=qa&utm_campaign=qa_regression&utm_contents=qa_test,QA 회귀 테스트
+관리자,103,기획,시연,2026-10-01,https://kakao-checklist-web.vercel.app/,internal,demo,internal_demo,demo_1,https://kakao-checklist-web.vercel.app/?utm_medium=internal&utm_source=demo&utm_campaign=internal_demo&utm_contents=demo_1,사내 시연/발표
+관리자,104,디자인,검수,2026-10-01,https://kakao-checklist-web.vercel.app/,internal,design,design_review,design_1,https://kakao-checklist-web.vercel.app/?utm_medium=internal&utm_source=design&utm_campaign=design_review&utm_contents=design_1,디자인 QA
+
+규칙
+,utm_medium,"어떤 방식으로 노출했는지 (cpc, social, message, referral, qr, internal)"
+,utm_source,"어디에서 왔는지 (google, instagram, kakao_channel, notion, offline / 내부는 dev, qa, demo, design)"
+,utm_campaign,무슨 캠페인인지 + 연월 (selfcheck_launch_2610)
+,utm_contents,"같은 캠페인 내 소재 구분 (ig_feed_1, ig_story_1)"
+,내부 트래픽,utm_medium=internal 로 구분. 다만 UTM 없이 들어오면 안 잡히므로 ?internal=1 을 함께 사용
