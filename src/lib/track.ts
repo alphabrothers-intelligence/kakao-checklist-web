@@ -56,6 +56,8 @@ export function logResultView(answers: CompleteAnswers) {
   pageview('result', {
     ...resultProps(answers),
     result_combo: `${industry} ${path} ${situation} ${goal}`,
+    // 20개 선택지를 한 표에서 보려고 목록 한 칸에 담습니다. 진단 완료 1건당 4개가 각각 1씩 올라갑니다.
+    selected_options: [`업종 · ${industry}`, `고객 행동 · ${path}`, `현재 문제 · ${situation}`, `목표 · ${goal}`],
     recommended_ads: products.map(([name]) => name),
     top3_ads: top.map(([name]) => name),
   });

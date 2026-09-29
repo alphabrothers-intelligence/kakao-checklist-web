@@ -22,6 +22,7 @@
 }",필수,
 결과 화면 진입,"접속시간(kst, ms)",접속 유저 IP,유저 설치 ID,-(비로그인),Web,-(웹),"UTM 정보, 내부 트래픽 여부",result,pageview,,,,,,"{
     result_combo: {업종} {고객행동} {현재문제} {목표},
+    selected_options: [업종 · {업종}, 고객 행동 · {고객행동}, 현재 문제 · {현재문제}, 목표 · {목표}],
     recommended_ads: [{추천광고1}, {추천광고2}],
     top3_ads: [{TOP1}, {TOP2}, {TOP3}],
     result_type: {고객행동} x {목표},
@@ -224,6 +225,7 @@ event_type 규칙: action=pageview → pageview@{page_name} / 나머지 → {act
 }","{
     page_name: result,
     result_combo: {업종} {고객행동} {현재문제} {목표},
+    selected_options: [업종 · {업종}, 고객 행동 · {고객행동}, 현재 문제 · {현재문제}, 목표 · {목표}],
     recommended_ads: [{추천광고1}, {추천광고2}],
     top3_ads: [{TOP1}, {TOP2}, {TOP3}],
     result_type: {고객행동} x {목표},

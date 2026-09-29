@@ -44,43 +44,61 @@ event_properties로 붙입니다. 참고 워크북의 `product → shop_name, ca
 | pageview | `pageview@{page_name}` | `pageview@result` |
 | 나머지 | `{action}@{object_type}` | `click@button`, `select@option`, `click@link` |
 
-## 2. 믹스패널에서 볼 수 있는 리포트 (13종)
+## 2. 만들 리포트
 
-### 요청하신 3가지
+전체 목록과 설정값은 `docs/kakao-logging-plan.xlsx` 의 `리포트 목록` 시트에 있습니다.
+Free 플랜은 좌석당 5개까지 저장되므로 아래 5개를 먼저 만듭니다.
 
-| # | 보고 싶은 것 | 리포트 | 설정 |
-|---|---|---|---|
-| 1 | 버튼별 클릭수 | Insights · Bar | `click` → Breakdown `object_id` |
-| 2 | 유형별 가이드 확인률 | Funnels | `pageview`(result) → `click`(open_guide) → `click`(custom_guide/starter_kit), Breakdown `path` |
-| 3 | 결과별 횟수 + 선택지 | Insights · Table | `pageview`(result) → Breakdown `result_combo`(600종) 또는 `result_type`(20종) |
+| # | 이름 | 종류 | Event | Breakdown |
+|---|---|---|---|---|
+| 01 | 결과별 업종 집계 | Insights · Table | `pageview@result` | `result_type` → 그 아래 `industry` |
+| 02 | 선택지별 선택 수 | Insights · Table | `pageview@result` | `selected_options` |
+| 03 | 버튼별 클릭 수 | Insights · Bar | `click@button` | `object_id` |
+| 04 | 유형별 가이드 확인률 | Funnels | `pageview@result` → `click@button` → `click@link` | `result_type` |
+| 05 | 진단 완주율 | Funnels | `pageview@intro` → `pageview@diagnosis_question` → `pageview@result` | — |
 
-### 추가로 나오는 것
+전부 `is_internal` **is not** `true` 필터를 겁니다. 보드 상단에 필터가 보이면 거기서
+한 번에 걸고, 안 보이면 리포트마다 Event 아래 `+ Filter` 로 겁니다.
 
-| # | 보고 싶은 것 | 리포트 | 설정 |
-|---|---|---|---|
-| 4 | 전체 완주율 | Funnels | `pageview`(intro) → STEP1~4 → `pageview`(result) |
-| 5 | 어느 질문에서 이탈하나 | Funnels | 위 퍼널의 단계별 전환율 |
-| 6 | 어느 질문에서 망설이나 | Insights | `select` → Filter `is_change=true` → Breakdown `step` |
-| 7 | 선택지별 인기도 | Insights · Bar | `pageview`(result) → Breakdown `industry` / `path` / `situation` / `goal` |
-| 8 | 결과 저장률 | Funnels | `pageview`(result) → `click`(open_download) → `click`(download_png/pdf) |
-| 9 | PNG vs PDF 선호 | Insights · Pie | `click` → Filter `object_id in (download_png, download_pdf)` → Breakdown `object_id` |
-| 10 | 맞춤 가이드 vs 스타터 키트 | Insights · Bar | `click` → Filter `object_id in (custom_guide, starter_kit)` → Breakdown `object_id` |
-| 11 | 유입 채널별 성과 | Funnels | 완주 퍼널 → Breakdown `utm_source` |
-| 12 | 결과를 끝까지 읽었나 | Insights | `scroll` → Breakdown `object_id` (section_01~04) |
-| 13 | 저장 실패율 / 장애 | Insights | `error` → Breakdown `object_id`, `error_message` |
+### 01번이 이 형태인 이유
+
+20가지 결과를 부모 행으로, 그 결과를 받은 업종을 자식 행으로 둡니다.
+
+| 결과 / 업종 | 횟수 |
+|---|---:|
+| **오프라인 방문형 × 신규 고객 확보** | **85** |
+| ㄴ 식품 | 22 |
+| ㄴ 패션/뷰티 | 18 |
+| ㄴ … 6개 업종 합계 85 | |
+
+고객 행동과 목표는 결과 이름에 이미 들어 있어 **항상 부모와 같은 수**라 뺐습니다.
+같은 결과를 받아도 사람마다 다른 것은 **업종과 현재 문제** 둘뿐입니다.
+
+현재 문제로 보려면 두 번째 Breakdown 만 `situation` 으로 바꿉니다.
+저장하지 않으면 리포트 개수에 들어가지 않습니다.
+
+업종과 현재 문제를 **좌우로 나란히 두는 것은 불가능**합니다.
+믹스패널 표는 위아래 중첩만 지원합니다.
+
+### 용어
+
+| 이름 | 속성 | 뜻 |
+|---|---|---|
+| 추천 유형 | `result_type` | 고객 행동 × 목표 = 20종. 추천 광고가 갈리는 기준 |
+| 선택 조합 | `result_combo` | 4개 선택을 모두 합친 것 = 600종 |
+| 선택지 | `selected_options` | 고른 4개를 목록 한 칸에 담은 것. 항목별로 세어 20행 |
+
+"결과"라는 말은 두 가지를 다 가리켜 혼동되므로 쓰지 않습니다.
 
 ### Custom Event (믹스패널 화면에서 설정, 코드 무관)
 
-`click`으로 뭉친 이벤트에 읽기 쉬운 이름을 붙입니다.
-
 | 이름 | 정의 |
 |---|---|
-| 진단 시작 | `click` + object_id = start_diagnosis |
-| 결과 도달 | `pageview` + page_name = result |
-| 광고 가이드 열기 | `click` + object_id = open_guide |
-| 가이드 링크 클릭 | `click` + object_id in (custom_guide, starter_kit) |
-| 결과 저장 | `click` + object_id in (download_png, download_pdf) |
-| 다시 테스트 | `click` + object_id = restart |
+| 진단 시작 | `click@button` + object_id = start_diagnosis |
+| 결과 도달 | `pageview@result` |
+| 광고 가이드 열기 | `click@button` + object_id = open_guide |
+| 가이드 링크 클릭 | `click@link` + object_id in (custom_guide, starter_kit) |
+| 결과 저장 | `click@button` + object_id in (download_png, download_pdf) |
 
 ## 3. 요청하신 로그 vs 볼 수 없는 로그
 
