@@ -8,3 +8,4 @@ dist/
 artifacts/
 .serena/
 graphify-out/
+.DS_Store
