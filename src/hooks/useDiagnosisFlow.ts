@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { EMPTY_ANSWERS, normalizeRoute, parseRoute, routeHash, type Answers, type Route } from '../lib/diagnosis';
 import { readAnswers, writeAnswers } from '../lib/session';
+import { logOptionSelect } from '../lib/track';
 
 export function useDiagnosisFlow() {
   const [answers, setAnswers] = useState<Answers>(readAnswers);
@@ -25,7 +26,9 @@ export function useDiagnosisFlow() {
   }, []);
   const select = useCallback((step: number, option: number) => {
     const values: Answers = [...current.current]; values[step] = option;
+    const is_change = current.current[step] !== null && current.current[step] !== option;
     current.current = values; setAnswers(values); writeAnswers(values);
+    logOptionSelect(step, option, is_change);
   }, []);
   const restart = useCallback(() => {
     const values = EMPTY_ANSWERS(); current.current = values; setAnswers(values); writeAnswers(values);

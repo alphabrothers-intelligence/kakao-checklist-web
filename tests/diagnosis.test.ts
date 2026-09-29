@@ -60,3 +60,16 @@ describe('session recovery and direct navigation', () => {
     expect(parseRoute('#/question/9')).toEqual({screen:'intro'});
   });
 });
+
+describe('로그 선택지 ID', () => {
+  it('설계 시트(logging-spec-options.csv)와 코드의 object_id가 일치한다', async () => {
+    const { readFileSync } = await import('node:fs');
+    const csv = readFileSync(new URL('../docs/logging-spec-options.csv', import.meta.url), 'utf8').replace(/^﻿/, '');
+    const fromSheet = csv.trim().split('\n').slice(1).map(line => line.split(',')[3]);
+    const source = readFileSync(new URL('../src/lib/track.ts', import.meta.url), 'utf8');
+    const block = /const OPTION_IDS = \[([\s\S]*?)\] as const;/.exec(source)![1];
+    const fromCode = [...block.matchAll(/'([^']+)'/g)].map(m => m[1]);
+    expect(fromCode).toEqual(fromSheet);
+    expect(fromCode).toHaveLength(OPTION_COUNTS.reduce((a, b) => a + b, 0));
+  });
+});
