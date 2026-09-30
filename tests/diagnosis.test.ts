@@ -57,7 +57,10 @@ describe('session recovery and direct navigation', () => {
     expect(normalizeRoute({screen:'result'},[0,null,null,null])).toEqual({screen:'question',step:1});
     expect(normalizeRoute({screen:'question',step:3},[null,null,null,null])).toEqual({screen:'question',step:0});
     expect(normalizeRoute({screen:'question',step:0},[0,1,2,3])).toEqual({screen:'question',step:0});
-    expect(parseRoute('#/question/9')).toEqual({screen:'intro'});
+    expect(parseRoute('/question/9')).toEqual({screen:'intro'});
+    expect(parseRoute('/question/2')).toEqual({screen:'question',step:1});
+    expect(parseRoute('/result')).toEqual({screen:'result'});
+    expect(parseRoute('/')).toEqual({screen:'intro'});
   });
 });
 

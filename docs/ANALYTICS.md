@@ -209,17 +209,17 @@ UTM이 없어도 21종 로그는 전부 정상 수집되고, `utm_source` 칸만
 내부 구분은 `?internal=1` 로 하는 것이 확실합니다.
 UTM 없이 주소만 쳐서 들어오면 UTM 방식은 못 잡기 때문입니다.
 
-### UTM 붙이는 위치 주의
+### UTM 붙이는 위치
 
-해시 라우팅이라 UTM은 `#` **앞**에 와야 합니다.
+주소 끝에 `?` 로 붙이면 됩니다. `docs/utm-plan.csv` 의 URL이 그 형태입니다.
 
-| | |
-|---|---|
-| 맞음 | `https://kakao-checklist-web.vercel.app/?utm_source=instagram#/` |
-| 틀림 | `https://kakao-checklist-web.vercel.app/#/?utm_source=instagram` |
+```
+https://kakao-checklist-web.vercel.app/?utm_medium=social&utm_source=instagram
+```
 
-`#` 뒤에 붙이면 주소의 질의문자열이 아니라 해시 안쪽이 되어 믹스패널이 읽지 못합니다.
-`docs/utm-plan.csv` 의 URL은 전부 올바른 형태입니다.
+2026년 9월 30일에 해시 라우팅(`/#/`)을 없애고 경로 라우팅으로 바꿨습니다.
+그전에는 UTM 이 `#` 앞에 와야 했지만 이제 그 제약이 없습니다.
+옛 주소(`/#/result`)로 들어와도 `main.tsx` 가 같은 경로로 바꿔 줍니다.
 
 ## 6. 구현 위치
 

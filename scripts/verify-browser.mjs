@@ -106,7 +106,7 @@ for(const width of [320,390,768]){
 }
 await mobile.setViewportSize({width:390,height:844});
 await mobile.screenshot({path:`${dir}/mobile-intro.png`,animations:'disabled',fullPage:true});
-await mobile.goto(baseURL + '/#/result');
+await mobile.goto(baseURL + '/result');
 await mobile.getByRole('heading',{name:'어떤 사업을 운영하고 계신가요?'}).waitFor();
 assert.equal(await mobile.getByRole('button',{name:'다음',exact:true}).isDisabled(),true);
 await mobile.locator('.option').last().scrollIntoViewIfNeeded();

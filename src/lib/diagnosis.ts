@@ -32,13 +32,13 @@ export function normalizeRoute(route: Route, answers: Answers): Route {
   }
   return route;
 }
-export function parseRoute(hash: string): Route {
-  if (hash === '#/result') return { screen: 'result' };
-  const match = /^#\/question\/([1-4])$/.exec(hash);
+export function parseRoute(path: string): Route {
+  if (path === '/result') return { screen: 'result' };
+  const match = /^\/question\/([1-4])$/.exec(path);
   return match ? { screen: 'question', step: Number(match[1]) - 1 } : { screen: 'intro' };
 }
-export function routeHash(route: Route) {
-  return route.screen === 'intro' ? '#/' : route.screen === 'result' ? '#/result' : `#/question/${route.step + 1}`;
+export function routePath(route: Route) {
+  return route.screen === 'intro' ? '/' : route.screen === 'result' ? '/result' : `/question/${route.step + 1}`;
 }
 export function getDiagnosis(answers: CompleteAnswers) {
   if (!isComplete(answers)) throw new Error('모든 질문에 답해주세요.');
