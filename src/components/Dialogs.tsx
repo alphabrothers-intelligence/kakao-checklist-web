@@ -16,7 +16,7 @@ function Modal({ title, children, onClose, busy = false }: { title: string; chil
     <h2>{title}</h2>{children}<button className="textbtn" onClick={() => onClose('button')} disabled={busy}>닫기</button>
   </dialog>;
 }
-const STARTER_KIT_URL = 'https://app.notion.com/p/alphabrothers/AI-Starter-Kit-3d69764ea3ec80b6bf7adad91b5d0af0';
+const STARTER_KIT_URL = 'https://kakaoclass-starterkit.oopy.io/';
 export function GuideDialog({ guide, answers, onClose }: { guide: string; answers: CompleteAnswers; onClose: () => void }) {
   return <Modal title="광고 가이드 확인하기" onClose={method => { logDialogClose(answers, 'guide', method); onClose(); }}>
     <div className="guide-options">

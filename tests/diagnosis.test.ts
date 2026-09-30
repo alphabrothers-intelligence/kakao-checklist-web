@@ -11,7 +11,7 @@ describe('provided diagnosis mapping', () => {
       expect(new Set(value.products.map(p => p[0])).size).toBe(2);
       for (const advice of value.advice) expect(advice.content).toHaveLength(4);
       expect(value.advice.every(v => v.content.every(t => t.length > 0))).toBe(true);
-      expect(value.guide).toMatch(/^https:\/\/alphabrothers\.notion\.site\/[0-9a-f]+$/);
+      expect(value.guide).toMatch(/^https:\/\/kakaoclass-starterkit\.oopy\.io\/[a-z_]+$/);
       count++;
     }
     expect(count).toBe(OPTION_COUNTS.reduce((a,b) => a*b, 1));

@@ -23,26 +23,26 @@
 
 | 전환 경로 (Q2) | 광고 목표 (Q4) | 가이드 페이지 제목 | 주소 |
 | --- | --- | --- | --- |
-| 오프라인 방문형 | 신규 고객 확보 | [오프라인 방문형] '신규 고객 확보'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80f48551e1b361181882 |
-| 오프라인 방문형 | 관심·인지도 높이기 | [오프라인 방문형] '관심·인지도 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec8073b2accf6a3b5d8a51 |
-| 오프라인 방문형 | 전환율 높이기 | [오프라인 방문형] '전환율 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec802e8ff3d6e6d9144c30 |
-| 오프라인 방문형 | 재방문·재구매 유도 | [오프라인 방문형] '재방문·재구매 유도'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80d4b04ad64f28e6c67e |
-| 예약 전환형 | 신규 고객 확보 | [예약 전환형] '신규 고객 확보'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec809ca89ad814d1f0bc35 |
-| 예약 전환형 | 관심·인지도 높이기 | [예약 전환형] '관심·인지도 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80e2b2a5d7a17fd3e23c |
-| 예약 전환형 | 전환율 높이기 | [예약 전환형] '전환율 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec8021aff3cc5e51df921c |
-| 예약 전환형 | 재방문·재구매 유도 | [예약 전환형] '재방문·재구매 유도'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80f784edfbb21e50b088 |
-| 온라인 전환형 | 신규 고객 확보 | [온라인 전환형] '신규 고객 확보'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80ecb16cd5616a049eac |
-| 온라인 전환형 | 관심·인지도 높이기 | [온라인 전환형] '관심·인지도 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80039c58e8f39bd5b1e5 |
-| 온라인 전환형 | 전환율 높이기 | [온라인 전환형] '전환율 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec8031840cc9fa45edd6cc |
-| 온라인 전환형 | 재방문·재구매 유도 | [온라인 전환형] '재방문·재구매 유도'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80919771ce0135af5019 |
-| 플랫폼 이용형 | 신규 고객 확보 | [플랫폼 이용형] '신규 고객 확보'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec8090aadcc94a0062ab43 |
-| 플랫폼 이용형 | 관심·인지도 높이기 | [플랫폼 이용형] '관심·인지도 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec8095bba1d2eb38f3063b |
-| 플랫폼 이용형 | 전환율 높이기 | [플랫폼 이용형] '전환율 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80d988abca25d927eed3 |
-| 플랫폼 이용형 | 재방문·재구매 유도 | [플랫폼 이용형] '재방문·재구매 유도'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec800eab20d5e9beea8b06 |
-| 상담 전환형 | 신규 고객 확보 | [상담 전환형] '신규 고객 확보'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80649747c589b029fe4c |
-| 상담 전환형 | 관심·인지도 높이기 | [상담 전환형] '관심·인지도 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec80d88d4eccdd02436b43 |
-| 상담 전환형 | 전환율 높이기 | [상담 전환형] '전환율 높이기'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec8064a5f0c7c611e142fb |
-| 상담 전환형 | 재방문·재구매 유도 | [상담 전환형] '재방문·재구매 유도'를 위한 광고 가이드 | https://alphabrothers.notion.site/3dc9764ea3ec8061ab70e05903b705ef |
+| 오프라인 방문형 | 신규 고객 확보 | [오프라인 방문형] '신규 고객 확보'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/off_new |
+| 오프라인 방문형 | 관심·인지도 높이기 | [오프라인 방문형] '관심·인지도 높이기'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/off_aware |
+| 오프라인 방문형 | 전환율 높이기 | [오프라인 방문형] '전환율 높이기'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/off_action |
+| 오프라인 방문형 | 재방문·재구매 유도 | [오프라인 방문형] '재방문·재구매 유도'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/off_return |
+| 예약 전환형 | 신규 고객 확보 | [예약 전환형] '신규 고객 확보'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/book_new |
+| 예약 전환형 | 관심·인지도 높이기 | [예약 전환형] '관심·인지도 높이기'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/book_aware |
+| 예약 전환형 | 전환율 높이기 | [예약 전환형] '전환율 높이기'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/book_action |
+| 예약 전환형 | 재방문·재구매 유도 | [예약 전환형] '재방문·재구매 유도'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/book_return |
+| 온라인 전환형 | 신규 고객 확보 | [온라인 전환형] '신규 고객 확보'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/on_new |
+| 온라인 전환형 | 관심·인지도 높이기 | [온라인 전환형] '관심·인지도 높이기'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/on_aware |
+| 온라인 전환형 | 전환율 높이기 | [온라인 전환형] '전환율 높이기'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/on_action |
+| 온라인 전환형 | 재방문·재구매 유도 | [온라인 전환형] '재방문·재구매 유도'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/on_return |
+| 플랫폼 이용형 | 신규 고객 확보 | [플랫폼 이용형] '신규 고객 확보'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/pf_new |
+| 플랫폼 이용형 | 관심·인지도 높이기 | [플랫폼 이용형] '관심·인지도 높이기'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/pf_aware |
+| 플랫폼 이용형 | 전환율 높이기 | [플랫폼 이용형] '전환율 높이기'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/pf_action |
+| 플랫폼 이용형 | 재방문·재구매 유도 | [플랫폼 이용형] '재방문·재구매 유도'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/pf_return |
+| 상담 전환형 | 신규 고객 확보 | [상담 전환형] '신규 고객 확보'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/call_new |
+| 상담 전환형 | 관심·인지도 높이기 | [상담 전환형] '관심·인지도 높이기'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/call_aware |
+| 상담 전환형 | 전환율 높이기 | [상담 전환형] '전환율 높이기'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/call_action |
+| 상담 전환형 | 재방문·재구매 유도 | [상담 전환형] '재방문·재구매 유도'를 위한 광고 가이드 | https://kakaoclass-starterkit.oopy.io/call_return |
 
 ## 제공된 원문
 
