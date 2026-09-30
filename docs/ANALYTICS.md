@@ -47,18 +47,46 @@ event_properties로 붙입니다. 참고 워크북의 `product → shop_name, ca
 ## 2. 만들 리포트
 
 전체 목록과 설정값은 `docs/kakao-logging-plan.xlsx` 의 `리포트 목록` 시트에 있습니다.
-Free 플랜은 좌석당 5개까지 저장되므로 아래 5개를 먼저 만듭니다.
+Free 플랜은 좌석당 5개까지 저장됩니다.
 
-| # | 이름 | 종류 | Event | Breakdown |
+2026년 9월 29일에 보드 `[실운영] 카카오 광고 자가진단 체크 리스트 대시보드 / 메인 대시보드`
+에 아래 4개를 만들었습니다. 한 칸은 비워 뒀습니다.
+
+| # | 이름 | 종류 | Event / 단계 | Breakdown |
 |---|---|---|---|---|
-| 01 | 결과별 업종 집계 | Insights · Table | `pageview@result` | `result_type` → 그 아래 `industry` |
-| 02 | 선택지별 선택 수 | Insights · Table | `pageview@result` | `selected_options` |
-| 03 | 버튼별 클릭 수 | Insights · Bar | `click@button` | `object_id` |
-| 04 | 유형별 가이드 확인률 | Funnels | `pageview@result` → `click@button` → `click@link` | `result_type` |
-| 05 | 진단 완주율 | Funnels | `pageview@intro` → `pageview@diagnosis_question` → `pageview@result` | — |
+| 01 | 결과별 선택지 선택 수 집계 | Insights · Table | `pageview@result` | `result_type` → 그 아래 `industry` |
+| 03 | 버튼별 클릭 수 집계 | Insights · Table | `click@button` + `click@link` + `close@dialog` | `object_id` → 그 아래 `step` |
+| 04 | 유형별 가이드 확인률 | Funnels | `pageview@result` → `click@button`(open_guide) → `click@link`(custom_guide) | `result_type` |
+| 05 | 진단 완주율(최종 결과 확인률) | Funnels | `pageview@intro` → `pageview@diagnosis_question` → `pageview@result` | 없음 |
 
-전부 `is_internal` **is not** `true` 필터를 겁니다. 보드 상단에 필터가 보이면 거기서
-한 번에 걸고, 안 보이면 리포트마다 Event 아래 `+ Filter` 로 겁니다.
+- 전부 `is_internal` = **False** 필터를 겁니다. True 로 저장하면 내부 테스트만 보입니다
+- 퍼널의 Window 는 **1 day**. 한 세션에 끝나는 흐름이라 기본값 7일은 길기만 합니다
+- 04번의 단계 조건(`object_id`)은 **단계 안쪽**에 겁니다. 바깥 Filter 에 걸면 앞 단계에도 적용돼 전환율이 0이 됩니다
+
+### 03번을 이 형태로 만든 이유
+
+- 클릭 가능한 요소가 `click@button` · `click@link` · `close@dialog` 셋으로 나뉘어 있어 Metric 을 3개 겁니다. 집계는 셋 다 **Total Events**
+- `step` 을 2단에 두면 `next` 가 질문 1·2·3 으로 갈립니다. 4번째 질문의 버튼은 문구가 달라 `view_result` 로 따로 찍히고 `step` 은 항상 4입니다
+- `step` 이 없는 버튼은 `(non-numeric values)` 로 묶입니다. 질문 화면 밖이라 값이 없다는 뜻이고 오류가 아닙니다
+- `page_name` 은 넣지 않았습니다. 지금은 `object_id` 가 정해지면 화면도 정해져서 열 하나가 같은 값만 반복합니다.
+  여러 화면에 같은 `object_id` 가 생기면(예: 오류 화면의 `reload`) 그때 3단으로 추가합니다
+- 행 제한은 **50**. 기본값 12로 두면 버튼이 늘었을 때 아래가 잘립니다
+
+### 현재 문제(situation)를 보는 법
+
+01번을 연 뒤 두 번째 Breakdown 만 `industry` → `situation` 으로 바꿉니다.
+**저장하지 않으면 리포트 개수에 들어가지 않습니다.** 보고 나면 되돌리거나 새로고침합니다.
+
+### 02번(선택지별 선택 수)은 보류
+
+`selected_options` 를 Breakdown 하면 배열이 통째로 한 줄로 잡힙니다.
+믹스패널이 이 속성을 **List 타입으로 인식해야** 항목별로 쪼개집니다.
+
+- Lexicon(Data Management → Event Properties) 에 속성이 올라오기까지 최대 하루 걸립니다
+- 올라온 뒤 타입이 List 면 자동으로 쪼개지고, 아니면 그 화면에서 List 로 바꿉니다
+- 쪼개지면 01번의 두 번째 Breakdown 을 `industry` → `selected_options` 로 교체합니다.
+  그러면 업종 6행과 현재 문제 5행이 **한 표에 각각** 서고, 각 그룹의 합이 부모와 같아집니다
+- 정렬을 횟수순에서 이름순으로 바꾸면 `업종 ·` / `현재 문제 ·` 끼리 묶여 보입니다
 
 ### 01번이 이 형태인 이유
 
@@ -74,11 +102,12 @@ Free 플랜은 좌석당 5개까지 저장되므로 아래 5개를 먼저 만듭
 고객 행동과 목표는 결과 이름에 이미 들어 있어 **항상 부모와 같은 수**라 뺐습니다.
 같은 결과를 받아도 사람마다 다른 것은 **업종과 현재 문제** 둘뿐입니다.
 
-현재 문제로 보려면 두 번째 Breakdown 만 `situation` 으로 바꿉니다.
-저장하지 않으면 리포트 개수에 들어가지 않습니다.
+Breakdown 을 `result_type` → `industry` → `situation` 3단으로 걸면 **조합 표**가 됩니다.
+행 하나가 "결과 + 업종 + 현재 문제" 한 조합이라 최대 600행으로 쪼개지고,
+업종별 합계는 손으로 더해야 나옵니다. 이건 07번(`result_combo`)과 같은 성격이라 만들지 않았습니다.
 
-업종과 현재 문제를 **좌우로 나란히 두는 것은 불가능**합니다.
-믹스패널 표는 위아래 중첩만 지원합니다.
+업종 합계와 현재 문제 합계를 **한 표에 나란히** 두려면 `selected_options` 가 List 로 잡혀야 합니다.
+그전까지는 Breakdown 을 바꿔 가며 두 번 봅니다.
 
 ### 용어
 
@@ -113,6 +142,7 @@ Free 플랜은 좌석당 5개까지 저장되므로 아래 5개를 먼저 만듭
 | 600가지 조합별 발생 횟수 | `pageview@result` → result_combo | 없음 |
 | 4스텝 선택지별 선택 횟수 | `pageview@result` → industry/path/situation/goal | 없음 |
 | 선택지를 바꿔 고른 횟수 | `select@option` → is_change | 없음 |
+| 스텝별 다음 버튼 클릭 수 | `click@button`(next) → step | 없음 |
 
 **CTR을 못 보는 것은 요청하신 데이터에 아무 영향이 없습니다.**
 요청하신 7가지는 전부 버튼·링크 클릭과 결과 도달이고, 그건 다 클릭 가능한 요소입니다.
@@ -206,3 +236,15 @@ UTM 없이 주소만 쳐서 들어오면 UTM 방식은 못 잡기 때문입니�
 
 **미구현**: `scroll@section` (설계표에 '선택'으로 표시). 결과 페이지를 끝까지
 내려보는지 확인이 필요해지면 추가합니다.
+
+## 7. 믹스패널 프로젝트 설정 (한 번 걸린 것들)
+
+같은 함정에 다시 빠지기 쉬워 적어 둡니다.
+
+| 무엇 | 증상 | 처리 |
+|---|---|---|
+| 프로젝트 시간대 | 기본이 미국 태평양(PDT). 한국 오후 로그가 전날로 잡혀 `Today` 가 빈 화면 | Project Settings → Timezone → `Asia/Seoul`. **변경 이후 수집분에만 적용**되므로 실사용자 유입 전에 바꿔야 함 |
+| autocapture | `[Auto] Page View` · `[Auto] Element Click` 등 7종이 설계표 21종과 중복 수집 | `src/lib/track.ts` 의 `autocapture` 옵션 제거(2026-09-29). 이미 쌓인 `[Auto]` 로그는 남으므로 Lexicon → Events → **Hide** 로 목록에서 치움 |
+| Lexicon 색인 지연 | 새로 보내기 시작한 속성이 Breakdown 검색 목록에 안 뜸 | 최대 하루. 급하면 검색창에서 따옴표 붙은 이름을 직접 선택. 단 그렇게 고르면 타입 정보가 없어 List 속성이 안 쪼개짐 |
+| Events 화면 검색창 | 속성 이름으로 찾으면 항상 0건 | 그 칸은 **이벤트 이름**만 찾음. 속성은 이벤트 한 건을 펼쳐서 확인 |
+| 내부 트래픽 | 테스트 로그가 `is_internal: false` 로 실사용자에 섞임 | 테스트에 쓰는 브라우저마다 `?internal=1` 로 한 번 접속 |
